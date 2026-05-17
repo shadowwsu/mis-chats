@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LA G4NG // Live Stats</title>
+    <title>LA G4NG // Live Stats Animado</title>
     
     <style>
         * {
@@ -26,7 +26,7 @@
             padding: 12px;
         }
 
-        /* 📊 BARRA MAESTRA DE RESOLUCIÓN AJUSTADA PANORÁMICA */
+        /* 📊 BARRA PRINCIPAL COMPACTA Y ULTRA ADAPTABLE */
         .stats-bar {
             width: 100%;
             height: 100%;
@@ -42,22 +42,14 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.05);
         }
 
-        /* Bloque Izquierdo: Marca + Botón Home oculto */
+        /* Bloque Izquierdo: Identidad de marca */
         .stats-brand {
             display: flex;
             align-items: center;
             gap: 12px;
-            text-decoration: none;
-            color: inherit;
-            cursor: pointer;
-            transition: opacity 0.2s ease;
+            flex-shrink: 0;
         }
 
-        .stats-brand:hover {
-            opacity: 0.8;
-        }
-
-        /* Logotipo circular premium (Vuelve al Index.html) */
         .brand-logo {
             width: 38px;
             height: 38px;
@@ -71,15 +63,6 @@
             font-weight: 900;
             color: #fff;
             letter-spacing: 0.5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
-            transition: all 0.2s ease;
-        }
-
-        .stats-brand:hover .brand-logo {
-            background: rgba(255, 183, 0, 0.15);
-            border-color: #ffb700;
-            color: #ffb700;
-            transform: scale(1.05);
         }
 
         .brand-text {
@@ -90,71 +73,131 @@
             text-transform: uppercase;
         }
 
-        /* Bloque Central: Contenedor estirado y centrado para las tarjetas de datos */
-        .stats-cards-box {
-            display: flex;
-            gap: 12px;
-            flex-grow: 1;
-            max-width: 550px; /* Un pelín más ancho al no estar el botón */
-            margin-left: 40px;
-            height: 70%;
-        }
-
-        .stat-card {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
+        /* 🎯 CENTRALIZACIÓN ABSOLUTA DEL CONTENIDO */
+        .center-display {
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            gap: 6px;
+            margin: 0 20px;
         }
 
-        .stat-card .number {
-            font-size: 24px;
-            font-weight: 800;
+        /* Contenedor en fila para los números grandes */
+        .counters-row {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .counter-group {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .counter-number {
+            font-size: 32px;
+            font-weight: 900;
             color: #fff;
-            line-height: 1;
+            letter-spacing: -1px;
+            transition: all 0.3s ease;
         }
 
-        .stat-card .label {
-            font-size: 9px;
-            font-weight: 700;
+        .counter-number.live {
+            color: #ff3b30;
+            text-shadow: 0 0 15px rgba(255, 59, 48, 0.3);
+        }
+
+        .counter-label {
+            font-size: 10px;
+            font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: rgba(255, 255, 255, 0.4);
-            margin-top: 4px;
         }
 
-        /* Tarjeta especial de Viewers destacados con aura roja */
-        .stat-card.live-viewers {
-            border-color: rgba(255, 59, 48, 0.15);
-            background: rgba(255, 59, 48, 0.02);
-            box-shadow: inset 0 0 15px rgba(255, 59, 48, 0.05);
+        /* 🔴 SECCIÓN EN VIVO (QUIÉNES ESTÁN EN STREAM REALMENTE) */
+        .live-streamers {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .stat-card.live-viewers .number {
-            color: #ff3b30; /* Rojo neon directo */
+        .streamer-tag {
+            font-size: 10px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            text-transform: uppercase;
+        }
+
+        /* Puntos rojos animados de directo */
+        .pulse-dot {
+            width: 5px;
+            height: 5px;
+            background: #ff3b30;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #ff3b30;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.6; }
+            50% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 12px #ff3b30; }
+            100% { transform: scale(0.9); opacity: 0.6; }
+        }
+
+        /* Separador intermedio */
+        .tag-sep {
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 10px;
+        }
+
+        /* 🏠 BOTÓN DERECHO PARA VOLVER AL INDEX ANTERIOR */
+        .back-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-        }
-
-        /* Punto dinámico simulando directo */
-        .stat-card.live-viewers .number::before {
-            content: '';
-            width: 6px;
-            height: 6px;
-            background: #ff3b30;
+            text-decoration: none;
+            width: 38px;
+            height: 38px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 8px #ff3b30;
+            color: rgba(255, 255, 255, 0.6);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
 
-        .stat-card.live-viewers .label {
-            color: rgba(255, 59, 48, 0.6);
+        .back-btn:hover {
+            color: #000;
+            background: #ffb700; /* Encendido en Oro */
+            border-color: #ffb700;
+            transform: scale(1.05);
+            box-shadow: 0 0 12px rgba(255, 183, 0, 0.4);
+        }
+
+        .back-icon {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Ajustes responsivos para pantallas ultra bajas */
+        @media (max-height: 180px) {
+            .counters-row { gap: 16px; }
+            .counter-number { font-size: 24px; }
+            .live-streamers { display: none; } /* Oculta la sublínea si no cabe */
         }
     </style>
 </head>
@@ -162,24 +205,81 @@
 
     <div class="stats-bar">
         
-        <a href="index.html" class="stats-brand" title="Volver al Panel Central">
+        <div class="stats-brand">
             <div class="brand-logo">LG</div>
             <div class="brand-text">LA<br>G4NG</div>
-        </a>
-
-        <div class="stats-cards-box">
-            <div class="stat-card">
-                <span class="number">3</span>
-                <span class="label">Canales Online</span>
-            </div>
-            
-            <div class="stat-card live-viewers">
-                <span class="number">1272</span>
-                <span class="label">Viewers en Directo</span>
-            </div>
         </div>
+
+        <div class="center-display">
+            
+            <div class="counters-row">
+                <div class="counter-group">
+                    <span class="counter-number" id="numChannels">0</span>
+                    <span class="counter-label">Online</span>
+                </div>
+                <div class="counter-group">
+                    <span class="counter-number live" id="numViewers">0</span>
+                    <span class="counter-label">Viewers</span>
+                </div>
+            </div>
+
+            <div class="live-streamers">
+                <div class="streamer-tag"><span class="pulse-dot"></span> FoxTerGG</div>
+                <span class="tag-sep">|</span>
+                <div class="streamer-tag"><span class="pulse-dot"></span> lopezfnx</div>
+                <span class="tag-sep">|</span>
+                <div class="streamer-tag"><span class="pulse-dot"></span> franbeuve</div>
+            </div>
+
+        </div>
+
+        <a href="index.html" class="back-btn" title="Regresar al Dashboard Central">
+            <svg class="back-icon" viewBox="0 0 24 24">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+        </a>
         
     </div>
+
+    <script>
+        // Configuración inicial de valores reales
+        let targetChannels = 3;
+        let targetViewers = 1272;
+
+        // Efecto CountUp animado al cargar la página
+        function animateValue(obj, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start);
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // Lanzar animaciones iniciales
+        const channelsEl = document.getElementById('numChannels');
+        const viewersEl = document.getElementById('numViewers');
+
+        setTimeout(() => {
+            animateValue(channelsEl, 0, targetChannels, 1200);
+            animateValue(viewersEl, 0, targetViewers, 2000);
+        }, 200);
+
+        // Simulación de actualizaciones automáticas en vivo (Fluctuaciones reales de viewers)
+        setInterval(() => {
+            // Varía los espectadores de forma aleatoria (+ o - entre 1 y 15) para que parezca vivo
+            let fluctuation = Math.floor(Math.random() * 30) - 15;
+            targetViewers += fluctuation;
+            
+            // Animación rápida de cambio
+            let current = parseInt(viewersEl.innerHTML);
+            animateValue(viewersEl, current, targetViewers, 800);
+        }, 4000); // Se refresca cada 4 segundos
+    </script>
 
 </body>
 </html>
