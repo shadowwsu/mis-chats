@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LA G4NG // Lista Cuadrada</title>
+    <title>LA G4NG // Cuadrícula Fija</title>
     
     <style>
         * {
@@ -11,6 +11,7 @@
             margin: 0;
             padding: 0;
             user-select: none;
+            overflow: hidden; /* Elimina cualquier scroll por completo */
         }
 
         body, html {
@@ -21,7 +22,6 @@
             color: #f5f5f7;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
         }
 
         /* 🏷️ CABECERA PREMIUM CON BOTÓN HOME */
@@ -77,41 +77,50 @@
             fill: currentColor;
         }
 
-        /* 🗃️ CONTENEDOR CON SCROLL VERTICAL */
-        .scroll-container {
-            width: 100%;
+        /* 🎛️ CONTENEDOR CENTRAL MAESTRO EN MAX-PANTALLA */
+        .grid-wrapper {
             flex-grow: 1;
-            overflow-y: auto;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            gap: 16px;
-            padding: 16px;
+            padding: 12px;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 🟦 REJILLA 2X2 PARA LAS CUATRO ESQUINAS */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 columnas */
+            grid-template-rows: repeat(2, 1fr);    /* 2 filas */
+            gap: 12px;
+            width: 100%;
+            height: 100%;
+            max-width: 85vh; /* Ajuste dinámico para obligar a que el grupo mantenga forma cuadrada general */
+            max-height: 85vh;
             background: transparent;
         }
 
-        /* 🟦 TARJETA EN CUADRADO PERFECTO (Proporción 1:1) */
+        /* Tarjeta en cuadrado perfecto individual */
         .chat-card {
-            width: 100%;
-            max-width: 400px;
-            aspect-ratio: 1 / 1;
             background: rgba(255, 255, 255, 0.01);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
+            border-radius: 14px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            flex-shrink: 0;
+            width: 100%;
+            height: 100%;
         }
 
-        /* 🏷️ NUEVA POSICIÓN: ETIQUETA EN LA PARTE SUPERIOR AISLADA */
+        /* 🏷️ ETIQUETA EN LA PARTE SUPERIOR SEPARADA */
         .chat-label {
             width: 100%;
             background: rgba(255, 255, 255, 0.02);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 8px 0;
+            padding: 6px 0;
             text-align: center;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
             color: rgba(255, 255, 255, 0.35);
@@ -128,27 +137,15 @@
             overflow: hidden;
         }
 
-        /* 🚀 RECORTE AJUSTADO CON NOMBRE ARRIBA */
+        /* 🚀 RECORTE AJUSTADO PARA MOSAICO FIJO 2X2 */
         .chat-mask iframe {
             position: absolute;
             width: 106%;
             left: -3%;
-            height: calc(100% + 230px);
-            top: -145px; /* Mantiene la barra morada oculta perfectamente */
+            height: calc(100% + 220px);
+            top: -140px; /* Esconde perfectamente el banner de Twitch en este formato */
             border: none;
             background: transparent;
-        }
-
-        /* Barra de scroll discreta */
-        .scroll-container::-webkit-scrollbar {
-            width: 6px;
-        }
-        .scroll-container::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .scroll-container::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
         }
     </style>
 </head>
@@ -164,28 +161,30 @@
         </a>
     </div>
 
-    <main class="scroll-container">
-        
-        <div class="chat-card">
-            <div class="chat-label">FoxTerGG</div>
-            <div class="chat-mask" id="box-foxtergg"></div>
-        </div>
+    <main class="grid-wrapper">
+        <div class="grid-container">
+            
+            <div class="chat-card">
+                <div class="chat-label">FoxTerGG</div>
+                <div class="chat-mask" id="box-foxtergg"></div>
+            </div>
 
-        <div class="chat-card">
-            <div class="chat-label">lopezfnx</div>
-            <div class="chat-mask" id="box-lopezfnx"></div>
-        </div>
+            <div class="chat-card">
+                <div class="chat-label">lopezfnx</div>
+                <div class="chat-mask" id="box-lopezfnx"></div>
+            </div>
 
-        <div class="chat-card">
-            <div class="chat-label">elcalvolol</div>
-            <div class="chat-mask" id="box-elcalvolol"></div>
-        </div>
+            <div class="chat-card">
+                <div class="chat-label">elcalvolol</div>
+                <div class="chat-mask" id="box-elcalvolol"></div>
+            </div>
 
-        <div class="chat-card">
-            <div class="chat-label">franbeuve</div>
-            <div class="chat-mask" id="box-franbeuve"></div>
-        </div>
+            <div class="chat-card">
+                <div class="chat-label">franbeuve</div>
+                <div class="chat-mask" id="box-franbeuve"></div>
+            </div>
 
+        </div>
     </main>
 
     <script>
