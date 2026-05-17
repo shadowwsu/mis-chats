@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chats</title>
+    <title>Lopezfnx // Chat Vertical</title>
     
     <style>
         * {
@@ -24,23 +24,63 @@
             flex-direction: column;
         }
 
-        /* 🏷️ CABECERA PREMIUM ULTRA LIMPIA FUSIONADA */
+        /* 🏷️ CABECERA EN LÍNEA: NOMBRE + BOTONES DE NAVEGACIÓN */
         .streamer-header {
             width: 100%;
-            padding: 10px 0;
+            padding: 8px 16px;
             background: rgba(255, 255, 255, 0.03);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            text-align: center;
-            font-size: 14px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #ffb700; /* Oro premium para resaltar en el entorno oscuro */
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Nombre a la izquierda, botones a la derecha */
             box-shadow: 0 4px 20px rgba(0,0,0,0.4);
             z-index: 10;
             flex-shrink: 0;
+        }
+
+        /* Nombre del canal actual */
+        .channel-name {
+            font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #ffb700; /* Oro premium */
+        }
+
+        /* Barra de navegación superior */
+        .nav-bar {
+            display: flex;
+            gap: 5px;
+        }
+
+        /* Botones estilo pestañas Liquid Glass */
+        .nav-link {
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.5);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Estilo del botón de la página en la que estás actualmente */
+        .nav-link.active {
+            color: #000;
+            background: #ffb700;
+            border-color: #ffb700;
+            box-shadow: 0 2px 8px rgba(255, 183, 0, 0.3);
         }
 
         /* 🗃️ CONTENEDOR MÁSCARA (CORTA TODO EL RELLENO DE TWITCH) */
@@ -52,17 +92,13 @@
             overflow: hidden;
         }
 
-        /* 🚀 EL TRUCO DEL RECORTE TOTAL: Empuja hacia afuera lo que no queremos ver */
+        /* 🚀 EL TRUCO DEL RECORTE TOTAL */
         .chat-mask iframe {
             position: absolute;
-            /* Estira el ancho para ocultar márgenes e iconos laterales molestos */
             width: 106%;
             left: -3%;
-            
-            /* Hacemos el alto mucho más grande y lo desplazamos estratégicamente */
             height: calc(100% + 195px);
-            top: -115px; /* Sube el iframe para saltarse la barra de bits, anuncios y la X de cerrar */
-            
+            top: -115px; /* Elimina la barra superior de Twitch y la inferior de enviar mensaje */
             border: none;
             background: transparent;
         }
@@ -70,35 +106,29 @@
 </head>
 <body>
 
-    <div class="streamer-header" id="channelTitle">Cargando Chat...</div>
+    <div class="streamer-header">
+        <div class="channel-name">Lopezfnx</div>
+        
+        <nav class="nav-bar">
+            <a href="todos.html" class="nav-link">Todos</a>
+            <a href="foxtergg.html" class="nav-link">Foxter</a>
+            <a href="elcalvolol.html" class="nav-link">Calvo</a>
+            <a href="index.html" class="nav-link active">Lopez</a>
+            <a href="franbeuve.html" class="nav-link">Fran</a>
+        </nav>
+    </div>
 
-    <div class="chat-mask" id="chatContainer">
-        </div>
+    <div class="chat-mask" id="chatContainer"></div>
 
     <script>
-        // Función principal para obtener parámetros de la URL
-        function getStreamerFromURL() {
-            const params = new URLSearchParams(window.location.search);
-            return params.get('streamer'); // Busca "?streamer=nombre"
-        }
-
         window.addEventListener('DOMContentLoaded', () => {
             const currentDomain = window.location.hostname;
-            
-            // Detectar qué streamer cargar. Si no hay ninguno en la URL, por defecto ponemos 'lopezfnx'
-            let activeChannel = getStreamerFromURL();
-            if (!activeChannel) {
-                activeChannel = 'lopezfnx'; 
-            }
-
-            // 1. Actualizar el título limpio de la parte superior en mayúsculas
-            document.getElementById('channelTitle').innerText = activeChannel;
-
-            // 2. Inyectar el iframe ultra-recortado usando la versión embed optimizada
             const container = document.getElementById('chatContainer');
+            
+            // Carga el chat incrustado de lopezfnx
             container.innerHTML = `
                 <iframe 
-                    src="https://www.twitch.tv/embed/${activeChannel}/chat?parent=${currentDomain}&darkpopout"
+                    src="https://www.twitch.tv/embed/lopezfnx/chat?parent=${currentDomain}&darkpopout"
                     height="100%"
                     width="100%">
                 </iframe>
