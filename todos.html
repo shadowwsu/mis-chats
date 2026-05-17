@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todos los Chats // Fila Horizontal</title>
+    <title>LA G4NG // Fila Horizontal</title>
     
     <style>
         * {
@@ -24,65 +24,35 @@
             flex-direction: column;
         }
 
-        /* 🏷️ CABECERA PREMIUM SUPERIOR */
+        /* 🏷️ CABECERA PREMIUM ULTRA LIMPIA (SIN ENLACES) */
         .streamer-header {
             width: 100%;
-            padding: 10px 16px;
+            padding: 12px 16px;
             background: rgba(255, 255, 255, 0.03);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-start; /* Alinea el título a la izquierda */
             box-shadow: 0 4px 20px rgba(0,0,0,0.4);
             z-index: 10;
             flex-shrink: 0;
         }
 
+        /* Título personalizado */
         .channel-name {
             font-size: 14px;
-            font-weight: 800;
+            font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #ffb700;
+            letter-spacing: 2px;
+            color: #ffb700; /* Oro premium */
         }
 
-        .nav-bar {
-            display: flex;
-            gap: 6px;
-        }
-
-        .nav-link {
-            text-decoration: none;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: rgba(255, 255, 255, 0.5);
-            padding: 5px 12px;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            transition: all 0.2s ease;
-        }
-
-        .nav-link:hover {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .nav-link.active {
-            color: #000;
-            background: #ffb700;
-            border-color: #ffb700;
-            box-shadow: 0 2px 8px rgba(255, 183, 0, 0.3);
-        }
-
-        /* 🎛️ CONTENEDOR EN FILA HORIZONTAL (1 FILA, 4 COLUMNAS) */
+        /* 🎛️ CONTENEDOR EN FILA HORIZONTAL PERFECTO */
         .row-container {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* Divide la pantalla en 4 columnas iguales */
+            grid-template-columns: repeat(4, 1fr); /* 4 Columnas exactamente iguales */
             grid-template-rows: 1fr;
             gap: 12px;
             flex-grow: 1;
@@ -90,7 +60,7 @@
             background: transparent;
         }
 
-        /* Tarjeta contenedora de cada chat en la fila */
+        /* Tarjeta de cristal para cada chat */
         .chat-card {
             position: relative;
             background: rgba(255, 255, 255, 0.01);
@@ -101,20 +71,20 @@
             flex-direction: column;
         }
 
-        /* Etiqueta interna con el nombre del streamer */
+        /* Nombre sutil del streamer arriba en cada bloque */
         .chat-label {
             position: absolute;
             top: 8px;
             left: 12px;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.25);
             z-index: 5;
             letter-spacing: 1px;
         }
 
-        /* Contenedor máscara para recortar el iframe */
+        /* Máscara de recorte */
         .chat-mask {
             width: 100%;
             height: 100%;
@@ -122,13 +92,13 @@
             overflow: hidden;
         }
 
-        /* 🚀 RECORTE AJUSTADO PARA COLUMNAS VERTICALES ALINEADAS EN FILA */
+        /* 🚀 RECORTE AJUSTADO: Eliminación completa de la barra morada invasora */
         .chat-mask iframe {
             position: absolute;
             width: 106%;
             left: -3%;
             height: calc(100% + 225px);
-            top: -140px; /* Sube lo justo para ocultar la barra morada en esta proporción */
+            top: -142px; /* Forzado exacto para limpiar el inicio del chat en horizontal */
             border: none;
             background: transparent;
         }
@@ -137,14 +107,7 @@
 <body>
 
     <div class="streamer-header">
-        <div class="channel-name">Todos los chats (Fila)</div>
-        <nav class="nav-bar">
-            <a href="todos.html" class="nav-link active">Todos</a>
-            <a href="foxtergg.html" class="nav-link">Foxter</a>
-            <a href="elcalvolol.html" class="nav-link">Calvo</a>
-            <a href="index.html" class="nav-link">Lopez</a>
-            <a href="franbeuve.html" class="nav-link">Fran</a>
-        </nav>
+        <div class="channel-name">LA G4NG</div>
     </div>
 
     <main class="row-container">
