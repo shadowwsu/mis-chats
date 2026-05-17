@@ -90,13 +90,13 @@
             text-transform: uppercase;
         }
 
-        /* Bloque Central: Contenedor estirado para las tarjetas de datos */
+        /* Bloque Central: Contenedor estirado y centrado para las tarjetas de datos */
         .stats-cards-box {
             display: flex;
             gap: 12px;
             flex-grow: 1;
-            max-width: 460px;
-            margin: 0 24px;
+            max-width: 550px; /* Un pelín más ancho al no estar el botón */
+            margin-left: 40px;
             height: 70%;
         }
 
@@ -156,72 +156,6 @@
         .stat-card.live-viewers .label {
             color: rgba(255, 59, 48, 0.6);
         }
-
-        /* Bloque Derecho: Controles e Interruptor de Minecraft */
-        .stats-controls {
-            display: flex;
-            align-items: center;
-        }
-
-        /* Botón interruptor estilo widget */
-        .mc-toggle-btn {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 8px 14px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .mc-toggle-btn:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-
-        .mc-label {
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: rgba(255, 59, 48, 0.8); /* Rojo apagado al inicio */
-            transition: color 0.2s ease;
-        }
-
-        /* El interruptor físico */
-        .mc-switch {
-            width: 26px;
-            height: 14px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            position: relative;
-            transition: background 0.2s ease;
-        }
-
-        .mc-switch::after {
-            content: '';
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: #fff;
-            border-radius: 50%;
-            top: 2px;
-            left: 2px;
-            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* Estado ACTIVO (ON) provocado por el clic */
-        .mc-toggle-btn.active .mc-label {
-            color: #34c759; /* Verde encendido */
-        }
-        .mc-toggle-btn.active .mc-switch {
-            background: #34c759;
-        }
-        .mc-toggle-btn.active .mc-switch::after {
-            transform: translateX(12px);
-        }
     </style>
 </head>
 <body>
@@ -244,29 +178,8 @@
                 <span class="label">Viewers en Directo</span>
             </div>
         </div>
-
-        <div class="stats-controls">
-            <div class="mc-toggle-btn" id="mcToggle">
-                <span class="mc-label" id="mcLabel">Minecraft Off</span>
-                <div class="mc-switch"></div>
-            </div>
-        </div>
         
     </div>
-
-    <script>
-        const mcToggle = document.getElementById('mcToggle');
-        const mcLabel = document.getElementById('mcLabel');
-
-        mcToggle.addEventListener('click', () => {
-            mcToggle.classList.toggle('active');
-            if(mcToggle.classList.contains('active')) {
-                mcLabel.textContent = 'Minecraft On';
-            } else {
-                mcLabel.textContent = 'Minecraft Off';
-            }
-        });
-    </script>
 
 </body>
 </html>
