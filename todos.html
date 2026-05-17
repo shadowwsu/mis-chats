@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todos los Chats // Horizontal Grid</title>
+    <title>Todos los Chats // Fila Horizontal</title>
     
     <style>
         * {
@@ -24,7 +24,7 @@
             flex-direction: column;
         }
 
-        /* 🏷️ CABECERA PREMIUM HORIZONTAL ACCESIBLE */
+        /* 🏷️ CABECERA PREMIUM SUPERIOR */
         .streamer-header {
             width: 100%;
             padding: 10px 16px;
@@ -79,23 +79,23 @@
             box-shadow: 0 2px 8px rgba(255, 183, 0, 0.3);
         }
 
-        /* 🎚️ REJILLA DE CRISTAL 2X2 PARA PANTALLAS HORIZONTALES */
-        .grid-container {
+        /* 🎛️ CONTENEDOR EN FILA HORIZONTAL (1 FILA, 4 COLUMNAS) */
+        .row-container {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: repeat(2, 1fr);
-            gap: 10px;
+            grid-template-columns: repeat(4, 1fr); /* Divide la pantalla en 4 columnas iguales */
+            grid-template-rows: 1fr;
+            gap: 12px;
             flex-grow: 1;
-            padding: 10px;
+            padding: 12px;
             background: transparent;
         }
 
-        /* Caja contenedora de cada chat */
+        /* Tarjeta contenedora de cada chat en la fila */
         .chat-card {
             position: relative;
             background: rgba(255, 255, 255, 0.01);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
+            border-radius: 14px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -104,9 +104,9 @@
         /* Etiqueta interna con el nombre del streamer */
         .chat-label {
             position: absolute;
-            top: 6px;
-            left: 10px;
-            font-size: 10px;
+            top: 8px;
+            left: 12px;
+            font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
             color: rgba(255, 255, 255, 0.3);
@@ -114,7 +114,7 @@
             letter-spacing: 1px;
         }
 
-        /* Máscara de recorte optimizada para la escala horizontal */
+        /* Contenedor máscara para recortar el iframe */
         .chat-mask {
             width: 100%;
             height: 100%;
@@ -122,13 +122,13 @@
             overflow: hidden;
         }
 
-        /* Ajuste de márgenes perfecto para eliminar publicidad y la barra morada */
+        /* 🚀 RECORTE AJUSTADO PARA COLUMNAS VERTICALES ALINEADAS EN FILA */
         .chat-mask iframe {
             position: absolute;
-            width: 104%;
-            left: -2%;
-            height: calc(100% + 210px);
-            top: -145px; /* Compensa la deformación horizontal ocultando el banner intruso */
+            width: 106%;
+            left: -3%;
+            height: calc(100% + 225px);
+            top: -140px; /* Sube lo justo para ocultar la barra morada en esta proporción */
             border: none;
             background: transparent;
         }
@@ -137,7 +137,7 @@
 <body>
 
     <div class="streamer-header">
-        <div class="channel-name">Todos los chats</div>
+        <div class="channel-name">Todos los chats (Fila)</div>
         <nav class="nav-bar">
             <a href="todos.html" class="nav-link active">Todos</a>
             <a href="foxtergg.html" class="nav-link">Foxter</a>
@@ -147,7 +147,7 @@
         </nav>
     </div>
 
-    <main class="grid-container">
+    <main class="row-container">
         
         <div class="chat-card">
             <div class="chat-label">FoxTerGG</div>
