@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LA G4NG // Lista Vertical</title>
+    <title>LA G4NG // Lista Cuadrada</title>
     
     <style>
         * {
@@ -45,10 +45,10 @@
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: #ffb700; /* Oro premium */
+            color: #ffb700;
         }
 
-        /* 🏠 BOTÓN HOME DE CRISTAL (LIQUID GLASS) */
+        /* 🏠 BOTÓN HOME DE CRISTAL */
         .home-btn {
             display: flex;
             align-items: center;
@@ -77,58 +77,41 @@
             fill: currentColor;
         }
 
-        /* 🗃️ CONTENEDOR CON SCROLL VERTICAL INDEPENDIENTE */
+        /* 🗃️ CONTENEDOR CON SCROLL VERTICAL */
         .scroll-container {
             width: 100%;
             flex-grow: 1;
-            overflow-y: auto; /* Permite bajar para ver todos los chats */
+            overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 14px;
-            padding: 12px;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
             background: transparent;
         }
 
-        /* Tarjeta para cada chat */
+        /* 🟦 TARJETA EN CUADRADO PERFECTO (Proporción 1:1) */
         .chat-card {
             width: 100%;
-            height: 420px; /* Altura ideal fija para leer cada bloque */
+            max-width: 400px;
+            aspect-ratio: 1 / 1;
             background: rgba(255, 255, 255, 0.01);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 14px;
+            border-radius: 16px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             flex-shrink: 0;
         }
 
-        /* Máscara de recorte */
-        .chat-mask {
-            width: 100%;
-            flex-grow: 1;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* 🚀 RECORTE AJUSTADO PARA VISTA VERTICAL APILADA */
-        .chat-mask iframe {
-            position: absolute;
-            width: 106%;
-            left: -3%;
-            height: calc(100% + 250px);
-            top: -165px; /* Más subido para evitar que asome publicidad en formato vertical */
-            border: none;
-            background: transparent;
-        }
-
-        /* 🏷️ ETIQUETA INFERIOR */
+        /* 🏷️ NUEVA POSICIÓN: ETIQUETA EN LA PARTE SUPERIOR AISLADA */
         .chat-label {
             width: 100%;
             background: rgba(255, 255, 255, 0.02);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 6px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 8px 0;
             text-align: center;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
             color: rgba(255, 255, 255, 0.35);
@@ -137,7 +120,26 @@
             z-index: 5;
         }
 
-        /* Personalización sutil de la barra de scroll para Minecraft */
+        /* Máscara de recorte interna */
+        .chat-mask {
+            width: 100%;
+            flex-grow: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 🚀 RECORTE AJUSTADO CON NOMBRE ARRIBA */
+        .chat-mask iframe {
+            position: absolute;
+            width: 106%;
+            left: -3%;
+            height: calc(100% + 230px);
+            top: -145px; /* Mantiene la barra morada oculta perfectamente */
+            border: none;
+            background: transparent;
+        }
+
+        /* Barra de scroll discreta */
         .scroll-container::-webkit-scrollbar {
             width: 6px;
         }
@@ -165,23 +167,23 @@
     <main class="scroll-container">
         
         <div class="chat-card">
-            <div class="chat-mask" id="box-foxtergg"></div>
             <div class="chat-label">FoxTerGG</div>
+            <div class="chat-mask" id="box-foxtergg"></div>
         </div>
 
         <div class="chat-card">
-            <div class="chat-mask" id="box-lopezfnx"></div>
             <div class="chat-label">lopezfnx</div>
+            <div class="chat-mask" id="box-lopezfnx"></div>
         </div>
 
         <div class="chat-card">
-            <div class="chat-mask" id="box-elcalvolol"></div>
             <div class="chat-label">elcalvolol</div>
+            <div class="chat-mask" id="box-elcalvolol"></div>
         </div>
 
         <div class="chat-card">
-            <div class="chat-mask" id="box-franbeuve"></div>
             <div class="chat-label">franbeuve</div>
+            <div class="chat-mask" id="box-franbeuve"></div>
         </div>
 
     </main>
