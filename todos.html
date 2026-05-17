@@ -24,7 +24,7 @@
             flex-direction: column;
         }
 
-        /* 🏷️ CABECERA PREMIUM ULTRA LIMPIA (SIN ENLACES) */
+        /* 🏷️ CABECERA PREMIUM ULTRA LIMPIA */
         .streamer-header {
             width: 100%;
             padding: 12px 16px;
@@ -34,25 +34,24 @@
             -webkit-backdrop-filter: blur(20px);
             display: flex;
             align-items: center;
-            justify-content: flex-start; /* Alinea el título a la izquierda */
+            justify-content: flex-start;
             box-shadow: 0 4px 20px rgba(0,0,0,0.4);
             z-index: 10;
             flex-shrink: 0;
         }
 
-        /* Título personalizado */
         .channel-name {
             font-size: 14px;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: #ffb700; /* Oro premium */
+            color: #ffb700;
         }
 
-        /* 🎛️ CONTENEDOR EN FILA HORIZONTAL PERFECTO */
+        /* 🎛️ CONTENEDOR EN FILA HORIZONTAL */
         .row-container {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 4 Columnas exactamente iguales */
+            grid-template-columns: repeat(4, 1fr);
             grid-template-rows: 1fr;
             gap: 12px;
             flex-grow: 1;
@@ -71,36 +70,39 @@
             flex-direction: column;
         }
 
-        /* Nombre sutil del streamer arriba en cada bloque */
-        .chat-label {
-            position: absolute;
-            top: 8px;
-            left: 12px;
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.25);
-            z-index: 5;
-            letter-spacing: 1px;
-        }
-
-        /* Máscara de recorte */
+        /* Máscara de recorte para el iframe */
         .chat-mask {
             width: 100%;
-            height: 100%;
+            flex-grow: 1; /* Ocupa todo el espacio superior disponible */
             position: relative;
             overflow: hidden;
         }
 
-        /* 🚀 RECORTE AJUSTADO: Eliminación completa de la barra morada invasora */
+        /* 🚀 RECORTE AJUSTADO HORIZONTAL */
         .chat-mask iframe {
             position: absolute;
             width: 106%;
             left: -3%;
             height: calc(100% + 225px);
-            top: -142px; /* Forzado exacto para limpiar el inicio del chat en horizontal */
+            top: -140px;
             border: none;
             background: transparent;
+        }
+
+        /* 🏷️ NUEVA POSICIÓN: ETIQUETA EN LA PARTE INFERIOR (No tapa nada) */
+        .chat-label {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 6px 0;
+            text-align: center;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.35);
+            letter-spacing: 1.5px;
+            flex-shrink: 0;
+            z-index: 5;
         }
     </style>
 </head>
@@ -113,23 +115,23 @@
     <main class="row-container">
         
         <div class="chat-card">
-            <div class="chat-label">FoxTerGG</div>
             <div class="chat-mask" id="box-foxtergg"></div>
+            <div class="chat-label">FoxTerGG</div>
         </div>
 
         <div class="chat-card">
-            <div class="chat-label">lopezfnx</div>
             <div class="chat-mask" id="box-lopezfnx"></div>
+            <div class="chat-label">lopezfnx</div>
         </div>
 
         <div class="chat-card">
-            <div class="chat-label">elcalvolol</div>
             <div class="chat-mask" id="box-elcalvolol"></div>
+            <div class="chat-label">elcalvolol</div>
         </div>
 
         <div class="chat-card">
-            <div class="chat-label">franbeuve</div>
             <div class="chat-mask" id="box-franbeuve"></div>
+            <div class="chat-label">franbeuve</div>
         </div>
 
     </main>
