@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LA G4NG // Mosaico Horizontal</title>
+    <title>LA G4NG // Mosaico Horizontal en Fila</title>
     
     <style>
         * {
@@ -11,7 +11,7 @@
             margin: 0;
             padding: 0;
             user-select: none;
-            overflow: hidden; /* Elimina cualquier tipo de scroll */
+            overflow: hidden; /* Bloquea cualquier scroll molesto */
         }
 
         body, html {
@@ -77,11 +77,10 @@
             fill: currentColor;
         }
 
-        /* 🎛️ REJILLA 2X2 ADAPTADA A PANTALLA ANCHA HORIZONTAL */
+        /* 🚀 REJILLA EN FILA: 4 Columnas paralelas de arriba a abajo */
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 2 Columnas anchas */
-            grid-template-rows: repeat(2, 1fr);    /* 2 Filas */
+            grid-template-columns: repeat(4, 1fr); /* 4 Columnas perfectas una al lado de la otra */
             gap: 12px;
             flex-grow: 1;
             padding: 12px;
@@ -90,7 +89,7 @@
             height: 100%;
         }
 
-        /* Tarjeta contenedora estilo mosaico */
+        /* Tarjeta contenedora estirada en vertical para la fila */
         .chat-card {
             background: rgba(255, 255, 255, 0.01);
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -102,14 +101,14 @@
             height: 100%;
         }
 
-        /* 🏷️ NOMBRE DE STREAMER EN LA PARTE SUPERIOR PROTEGIDO */
+        /* 🏷️ NOMBRE DE STREAMER EN LA PARTE SUPERIOR */
         .chat-label {
             width: 100%;
             background: rgba(255, 255, 255, 0.02);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 6px 0;
+            padding: 8px 0;
             text-align: center;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
             color: rgba(255, 255, 255, 0.35);
@@ -126,13 +125,13 @@
             overflow: hidden;
         }
 
-        /* 🚀 RECORTE AJUSTADO: Eliminación total de la barra morada en formato horizontal ancho */
+        /* ✂️ RECORTE DE TWITCH EN FILA VERTICAL EXTRA ANGOSTA */
         .chat-mask iframe {
             position: absolute;
-            width: 104%;
-            left: -2%;
-            height: calc(100% + 220px);
-            top: -142px; /* Forzado exacto para que el chat empiece limpio desde arriba en 2x2 */
+            width: 108%; /* Un pelín más ancho para esconder bordes nativos */
+            left: -4%;
+            height: calc(100% + 240px);
+            top: -160px; /* Esconde la barra morada de logueo limpiamente */
             border: none;
             background: transparent;
         }
