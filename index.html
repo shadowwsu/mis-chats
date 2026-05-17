@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LA G4NG // Live Stats</title>
+    <title>Dashboard Hub // LA G4NG</title>
     
     <style>
         * {
@@ -11,7 +11,6 @@
             margin: 0;
             padding: 0;
             user-select: none;
-            overflow: hidden;
         }
 
         body, html {
@@ -24,9 +23,10 @@
             align-items: center;
             justify-content: center;
             padding: 12px;
+            overflow: hidden;
         }
 
-        /* 📊 BARRA MAESTRA DE RESOLUCIÓN AJUSTADA PANORÁMICA */
+        /* 📊 BARRA MAESTRA DEL INDEX (RESOLUCIÓN EXACTA) */
         .stats-bar {
             width: 100%;
             height: 100%;
@@ -40,9 +40,11 @@
             align-items: center;
             justify-content: space-between;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+            position: relative;
+            z-index: 10;
         }
 
-        /* Bloque Izquierdo: Solo marca estática */
+        /* Bloque Izquierdo: Marca Estática */
         .stats-brand {
             display: flex;
             align-items: center;
@@ -140,17 +142,16 @@
             color: rgba(255, 59, 48, 0.6);
         }
 
-        /* 🚪 NUEVO BOTÓN HOME A LA DERECHA (ICONO PERSONITA) */
-        .exit-btn {
+        /* 👤 BOTÓN INTERACTIVO DE LA PERSONITA (ABRE EL MENÚ AL LADO) */
+        .menu-trigger-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            text-decoration: none;
             width: 38px;
             height: 38px;
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 50%; /* Redondo a juego con el logo */
+            border-radius: 50%;
             color: rgba(255, 255, 255, 0.6);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
@@ -158,22 +159,129 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
 
-        .exit-btn:hover {
+        .menu-trigger-btn:hover, .menu-trigger-btn.active {
             color: #000;
-            background: #ffb700; /* Se enciende en oro al pasar el cursor */
+            background: #ffb700; /* Se ilumina en oro premium */
             border-color: #ffb700;
-            transform: scale(1.08);
+            transform: scale(1.05);
             box-shadow: 0 0 12px rgba(255, 183, 0, 0.4);
         }
 
-        .exit-icon {
+        .person-icon {
             width: 18px;
             height: 18px;
             fill: currentColor;
         }
+
+        /* 🗺️ PANEL LATERAL DESPLEGABLE OCULTO (AL LADO DERECHO) */
+        .side-menu {
+            position: fixed;
+            top: 12px;
+            right: -280px; /* Escondido por defecto fuera de la pantalla */
+            width: 260px;
+            height: calc(100% - 24px);
+            background: rgba(10, 11, 16, 0.92);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.7);
+            z-index: 100;
+            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Estado visible cuando se activa */
+        .side-menu.open {
+            right: 12px;
+        }
+
+        .menu-title {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 8px;
+        }
+
+        .links-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        /* Botones del menú lateral estilo Apple Glass */
+        .hub-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 11px 14px;
+            border-radius: 10px;
+            color: #f5f5f7;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .hub-btn.featured {
+            background: rgba(255, 183, 0, 0.05);
+            border-color: rgba(255, 183, 0, 0.15);
+            color: #ffb700;
+        }
+
+        .hub-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateX(-3px);
+        }
+
+        .hub-btn.featured:hover {
+            background: #ffb700;
+            border-color: #ffb700;
+            color: #000;
+        }
+
+        .btn-arrow {
+            font-size: 11px;
+            opacity: 0.4;
+        }
+        
+        .hub-btn:hover .btn-arrow {
+            opacity: 1;
+        }
+
+        /* Capa oscura transparente de fondo al abrir el menú */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 90;
+            transition: opacity 0.3s ease;
+        }
+        .menu-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
     </style>
 </head>
 <body>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
 
     <div class="stats-bar">
         
@@ -194,13 +302,60 @@
             </div>
         </div>
 
-        <a href="index.html" class="exit-btn" title="Volver al Menú Central">
-            <svg class="exit-icon" viewBox="0 0 24 24">
+        <div class="menu-trigger-btn" id="menuBtn" title="Abrir Panel de Chats">
+            <svg class="person-icon" viewBox="0 0 24 24">
                 <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
             </svg>
-        </a>
+        </div>
         
     </div>
+
+    <nav class="side-menu" id="sideMenu">
+        <div class="menu-title">Lista de Chats</div>
+        
+        <div class="links-grid">
+            <a href="todos_horizontal.html" class="hub-btn featured">
+                <span>Todos (Horizontal)</span>
+                <span class="btn-arrow">➔</span>
+            </a>
+            <a href="todos_vertical.html" class="hub-btn featured">
+                <span>Todos (Vertical)</span>
+                <span class="btn-arrow">➔</span>
+            </a>
+            
+            <a href="foxtergg.html" class="hub-btn">
+                <span>FoxTerGG</span>
+                <span class="btn-arrow">➔</span>
+                </a>
+            <a href="lopezfnx.html" class="hub-btn">
+                <span>Lopezfnx</span>
+                <span class="btn-arrow">➔</span>
+            </a>
+            <a href="elcalvolol.html" class="hub-btn">
+                <span>Elcalvolol</span>
+                <span class="btn-arrow">➔</span>
+            </a>
+            <a href="franbeuve.html" class="hub-btn">
+                <span>Franbeuve</span>
+                <span class="btn-arrow">➔</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const sideMenu = document.getElementById('sideMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        function toggleMenu() {
+            menuBtn.classList.toggle('active');
+            sideMenu.classList.toggle('open');
+            menuOverlay.classList.toggle('show');
+        }
+
+        menuBtn.addEventListener('click', toggleMenu);
+        menuOverlay.addEventListener('click', toggleMenu);
+    </script>
 
 </body>
 </html>
