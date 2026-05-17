@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LA G4NG // Fila Horizontal</title>
+    <title>LA G4NG // Mosaico Horizontal</title>
     
     <style>
         * {
@@ -11,7 +11,7 @@
             margin: 0;
             padding: 0;
             user-select: none;
-            overflow: hidden;
+            overflow: hidden; /* Elimina cualquier tipo de scroll */
         }
 
         body, html {
@@ -34,7 +34,7 @@
             -webkit-backdrop-filter: blur(20px);
             display: flex;
             align-items: center;
-            justify-content: space-between; /* Título a la izquierda, botón a la derecha */
+            justify-content: space-between;
             box-shadow: 0 4px 20px rgba(0,0,0,0.4);
             z-index: 10;
             flex-shrink: 0;
@@ -45,10 +45,10 @@
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: #ffb700; /* Oro premium */
+            color: #ffb700;
         }
 
-        /* 🏠 BOTÓN HOME DE CRISTAL (LIQUID GLASS) */
+        /* 🏠 BOTÓN HOME DE CRISTAL */
         .home-btn {
             display: flex;
             align-items: center;
@@ -71,59 +71,42 @@
             transform: scale(1.05);
         }
 
-        /* Icono SVG de casa minimalista */
         .home-icon {
             width: 18px;
             height: 18px;
             fill: currentColor;
         }
 
-        /* 🎛️ CONTENEDOR EN FILA HORIZONTAL PERFECTO */
-        .row-container {
+        /* 🎛️ REJILLA 2X2 ADAPTADA A PANTALLA ANCHA HORIZONTAL */
+        .grid-container {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 4 Columnas simétricas */
-            grid-template-rows: 1fr;
+            grid-template-columns: repeat(2, 1fr); /* 2 Columnas anchas */
+            grid-template-rows: repeat(2, 1fr);    /* 2 Filas */
             gap: 12px;
             flex-grow: 1;
             padding: 12px;
             background: transparent;
+            width: 100%;
+            height: 100%;
         }
 
-        /* Tarjeta de cristal para cada chat */
+        /* Tarjeta contenedora estilo mosaico */
         .chat-card {
-            position: relative;
             background: rgba(255, 255, 255, 0.01);
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 14px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-        }
-
-        /* Máscara de recorte superior e inferior */
-        .chat-mask {
             width: 100%;
-            flex-grow: 1;
-            position: relative;
-            overflow: hidden;
+            height: 100%;
         }
 
-        /* 🚀 RECORTE AJUSTADO HORIZONTAL: Adiós banner de anuncios y barra morada */
-        .chat-mask iframe {
-            position: absolute;
-            width: 106%;
-            left: -3%;
-            height: calc(100% + 225px);
-            top: -140px; 
-            border: none;
-            background: transparent;
-        }
-
-        /* 🏷️ ETIQUETA INFERIOR (No estorba el texto del chat) */
+        /* 🏷️ NOMBRE DE STREAMER EN LA PARTE SUPERIOR PROTEGIDO */
         .chat-label {
             width: 100%;
             background: rgba(255, 255, 255, 0.02);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             padding: 6px 0;
             text-align: center;
             font-size: 10px;
@@ -133,6 +116,25 @@
             letter-spacing: 1.5px;
             flex-shrink: 0;
             z-index: 5;
+        }
+
+        /* Máscara de recorte interna */
+        .chat-mask {
+            width: 100%;
+            flex-grow: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 🚀 RECORTE AJUSTADO: Eliminación total de la barra morada en formato horizontal ancho */
+        .chat-mask iframe {
+            position: absolute;
+            width: 104%;
+            left: -2%;
+            height: calc(100% + 220px);
+            top: -142px; /* Forzado exacto para que el chat empiece limpio desde arriba en 2x2 */
+            border: none;
+            background: transparent;
         }
     </style>
 </head>
@@ -148,26 +150,26 @@
         </a>
     </div>
 
-    <main class="row-container">
+    <main class="grid-container">
         
         <div class="chat-card">
-            <div class="chat-mask" id="box-foxtergg"></div>
             <div class="chat-label">FoxTerGG</div>
+            <div class="chat-mask" id="box-foxtergg"></div>
         </div>
 
         <div class="chat-card">
-            <div class="chat-mask" id="box-lopezfnx"></div>
             <div class="chat-label">lopezfnx</div>
+            <div class="chat-mask" id="box-lopezfnx"></div>
         </div>
 
         <div class="chat-card">
-            <div class="chat-mask" id="box-elcalvolol"></div>
             <div class="chat-label">elcalvolol</div>
+            <div class="chat-mask" id="box-elcalvolol"></div>
         </div>
 
         <div class="chat-card">
-            <div class="chat-mask" id="box-franbeuve"></div>
             <div class="chat-label">franbeuve</div>
+            <div class="chat-mask" id="box-franbeuve"></div>
         </div>
 
     </main>
