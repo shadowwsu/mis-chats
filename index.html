@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Hub // LA G4NG</title>
+    <title>LA G4NG // Live Stats</title>
     
     <style>
         * {
@@ -11,6 +11,7 @@
             margin: 0;
             padding: 0;
             user-select: none;
+            overflow: hidden;
         }
 
         body, html {
@@ -20,182 +21,185 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             color: #f5f5f7;
             display: flex;
-            justify-content: center;
             align-items: center;
-            overflow: hidden;
+            justify-content: center;
+            padding: 12px;
         }
 
-        /* 🌌 EFECTO DE RESPLANDOR DE FONDO */
-        .bg-glow {
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(255, 183, 0, 0.06) 0%, transparent 70%);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        /* 🎛️ PANELS CENTRALES */
-        .hub-container {
-            width: 90%;
-            max-width: 480px;
+        /* 📊 BARRA MAESTRA DE RESOLUCIÓN AJUSTADA PANORÁMICA */
+        .stats-bar {
+            width: 100%;
+            height: 100%;
             background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            padding: 26px 24px;
-            border-radius: 24px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 
-                        inset 0 1px 1px rgba(255, 255, 255, 0.1);
-            text-align: center;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .hub-title {
-            font-size: 18px;
-            font-weight: 900;
-            letter-spacing: 3px;
-            color: #ffb700; /* Oro premium */
-            text-transform: uppercase;
-            text-shadow: 0 2px 10px rgba(255, 183, 0, 0.2);
-        }
-
-        .category-wrapper {
-            text-align: left;
-        }
-
-        .category-label {
-            font-size: 11px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: rgba(255, 255, 255, 0.3);
-            margin-bottom: 10px;
-            padding-left: 4px;
-            display: block;
-        }
-
-        .menu-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        /* Botón de enlace estilo Apple Liquid Glass */
-        .hub-btn {
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-radius: 16px;
+            padding: 0 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            text-decoration: none;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 14px 18px;
-            border-radius: 14px;
-            color: #f5f5f7;
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.05);
         }
 
-        /* Variación para los botones grupales/especiales */
-        .hub-btn.featured {
-            background: rgba(255, 183, 0, 0.04);
-            border-color: rgba(255, 183, 0, 0.15);
+        /* Bloque Izquierdo: Solo marca estática */
+        .stats-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
         }
 
-        /* Botón destacado para las Estadísticas / Viewers */
-        .hub-btn.stats-btn {
-            background: rgba(255, 59, 48, 0.04);
-            border-color: rgba(255, 59, 48, 0.15);
-        }
-
-        /* Animaciones al pasar el ratón por encima */
-        .hub-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.18);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-
-        .hub-btn.featured:hover {
-            background: #ffb700;
-            border-color: #ffb700;
-            color: #000;
-        }
-
-        .hub-btn.stats-btn:hover {
-            background: #ff3b30;
-            border-color: #ff3b30;
+        .brand-logo {
+            width: 38px;
+            height: 38px;
+            background: #121318;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 900;
             color: #fff;
-            box-shadow: 0 0 15px rgba(255, 59, 48, 0.4);
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
         }
 
-        .btn-arrow {
+        .brand-text {
             font-size: 14px;
-            opacity: 0.4;
-            transition: transform 0.2s ease, opacity 0.2s ease;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            line-height: 1.1;
+            text-transform: uppercase;
         }
 
-        .hub-btn:hover .btn-arrow {
-            opacity: 1;
-            transform: translateX(3px);
+        /* Bloque Central: Contenedor para las tarjetas de datos */
+        .stats-cards-box {
+            display: flex;
+            gap: 12px;
+            flex-grow: 1;
+            max-width: 500px;
+            margin: 0 20px;
+            height: 70%;
+        }
+
+        .stat-card {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .stat-card .number {
+            font-size: 24px;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .stat-card .label {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 4px;
+        }
+
+        /* Tarjeta de Viewers con aura roja */
+        .stat-card.live-viewers {
+            border-color: rgba(255, 59, 48, 0.15);
+            background: rgba(255, 59, 48, 0.02);
+            box-shadow: inset 0 0 15px rgba(255, 59, 48, 0.05);
+        }
+
+        .stat-card.live-viewers .number {
+            color: #ff3b30;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .stat-card.live-viewers .number::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #ff3b30;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px #ff3b30;
+        }
+
+        .stat-card.live-viewers .label {
+            color: rgba(255, 59, 48, 0.6);
+        }
+
+        /* 🚪 NUEVO BOTÓN HOME A LA DERECHA (ICONO PERSONITA) */
+        .exit-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            width: 38px;
+            height: 38px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50%; /* Redondo a juego con el logo */
+            color: rgba(255, 255, 255, 0.6);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .exit-btn:hover {
+            color: #000;
+            background: #ffb700; /* Se enciende en oro al pasar el cursor */
+            border-color: #ffb700;
+            transform: scale(1.08);
+            box-shadow: 0 0 12px rgba(255, 183, 0, 0.4);
+        }
+
+        .exit-icon {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-glow"></div>
+    <div class="stats-bar">
+        
+        <div class="stats-brand">
+            <div class="brand-logo">LG</div>
+            <div class="brand-text">LA<br>G4NG</div>
+        </div>
 
-    <div class="hub-container">
-        <div class="hub-title">LA G4NG HUB</div>
-
-        <div class="category-wrapper">
-            <span class="category-label">ESTADÍSTICAS</span>
-            <div class="menu-grid">
-                <a href="viewers.html" class="hub-btn stats-btn">
-                    <span>📊 Viewers Totales (Contadores)</span>
-                    <span class="btn-arrow">➔</span>
-                </a>
+        <div class="stats-cards-box">
+            <div class="stat-card">
+                <span class="number">3</span>
+                <span class="label">Canales Online</span>
+            </div>
+            
+            <div class="stat-card live-viewers">
+                <span class="number">1272</span>
+                <span class="label">Viewers en Directo</span>
             </div>
         </div>
 
-        <div class="category-wrapper">
-            <span class="category-label">CHATS</span>
-            <nav class="menu-grid">
-                <a href="todos_horizontal.html" class="hub-btn featured">
-                    <span>Todos los Chats (Horizontal)</span>
-                    <span class="btn-arrow">➔</span>
-                </a>
-                <a href="todos_vertical.html" class="hub-btn featured">
-                    <span>Todos los Chats (Vertical)</span>
-                    <span class="btn-arrow">➔</span>
-                </a>
-
-                <a href="foxtergg.html" class="hub-btn">
-                    <span>FoxTerGG</span>
-                    <span class="btn-arrow">➔</span>
-                </a>
-                <a href="lopezfnx.html" class="hub-btn">
-                    <span>Lopezfnx</span>
-                    <span class="btn-arrow">➔</span>
-                </a>
-                <a href="elcalvolol.html" class="hub-btn">
-                    <span>Elcalvolol</span>
-                    <span class="btn-arrow">➔</span>
-                </a>
-                <a href="franbeuve.html" class="hub-btn">
-                    <span>Franbeuve</span>
-                    <span class="btn-arrow">➔</span>
-                </a>
-            </nav>
-        </div>
+        <a href="index.html" class="exit-btn" title="Volver al Menú Central">
+            <svg class="exit-icon" viewBox="0 0 24 24">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+        </a>
+        
     </div>
 
 </body>
