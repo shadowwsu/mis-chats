@@ -20,17 +20,19 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             color: #f5f5f7;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
+            gap: 20px;
             overflow: hidden;
         }
 
         /* 🌌 EFECTO DE RESPLANDOR DE FONDO */
         .bg-glow {
             position: absolute;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(255, 183, 0, 0.08) 0%, transparent 70%);
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(255, 183, 0, 0.05) 0%, transparent 70%);
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -38,7 +40,188 @@
             pointer-events: none;
         }
 
-        /* 🎛️ CONTENEDOR CENTRAL (PANEL DE CRISTAL LIQUIDO) */
+        /* 📊 NUEVA SECCIÓN: PANEL DE VIEWERS Y ESTADÍSTICAS (RESOLUCIÓN EXACTA) */
+        .stats-bar {
+            width: 90%;
+            max-width: 780px; /* Estirado horizontal exacto */
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-radius: 20px;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+            z-index: 10;
+        }
+
+        /* Bloque izquierdo: Identificador */
+        .stats-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 38px;
+            height: 38px;
+            background: #121318;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .brand-text {
+            font-size: 14px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            line-height: 1.1;
+            text-transform: uppercase;
+        }
+
+        /* Bloque Central: Contenedor de las dos tarjetas de datos */
+        .stats-cards-box {
+            display: flex;
+            gap: 12px;
+            flex-grow: 1;
+            max-width: 420px;
+            margin: 0 20px;
+        }
+
+        .stat-card {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .stat-card .number {
+            font-size: 22px;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .stat-card .label {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 2px;
+        }
+
+        /* Tarjeta especial de Viewers destacados con aura roja */
+        .stat-card.live-viewers {
+            border-color: rgba(255, 59, 48, 0.15);
+            background: rgba(255, 59, 48, 0.02);
+            box-shadow: inset 0 0 15px rgba(255, 59, 48, 0.05);
+        }
+
+        .stat-card.live-viewers .number {
+            color: #ff3b30; /* Rojo vibrante directo */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .stat-card.live-viewers .number::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #ff3b30;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px #ff3b30;
+        }
+
+        .stat-card.live-viewers .label {
+            color: rgba(255, 59, 48, 0.6);
+        }
+
+        /* Bloque Derecho: Controles e Interruptor de Minecraft */
+        .stats-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Botón interruptor estilo widget */
+        .mc-toggle-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 8px 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .mc-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .mc-label {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: rgba(255, 59, 48, 0.8); /* Inicialmente rojo (OFF) */
+            transition: color 0.2s ease;
+        }
+
+        /* El switch/palanca físico */
+        .mc-switch {
+            width: 26px;
+            height: 14px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            position: relative;
+            transition: background 0.2s ease;
+        }
+
+        .mc-switch::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Estado ACTIVO (ON) provocado por clic */
+        .mc-toggle-btn.active .mc-label {
+            color: #34c759; /* Verde ON */
+        }
+        .mc-toggle-btn.active .mc-switch {
+            background: #34c759;
+        }
+        .mc-toggle-btn.active .mc-switch::after {
+            transform: translateX(12px);
+        }
+
+
+        /* 🎛️ PANEL PRINCIPAL DE CRISTAL ABAJO (BOTONES DE REDIRECCIÓN) */
         .hub-container {
             width: 90%;
             max-width: 480px;
@@ -46,29 +229,25 @@
             border: 1px solid rgba(255, 255, 255, 0.07);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
-            padding: 30px 24px;
+            padding: 24px;
             border-radius: 24px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 
-                        inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1);
             text-align: center;
             z-index: 10;
         }
 
-        /* TÍTULO PRINCIPAL DEL GRUPO */
         .hub-title {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 900;
             letter-spacing: 3px;
-            color: #ffb700; /* Oro premium */
+            color: #ffb700;
             text-transform: uppercase;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             text-shadow: 0 2px 10px rgba(255, 183, 0, 0.2);
         }
 
-        /* 🏷️ SECCIÓN PESTAÑA CHATS */
         .category-wrapper {
             text-align: left;
-            margin-top: 10px;
         }
 
         .category-label {
@@ -82,14 +261,12 @@
             display: block;
         }
 
-        /* 🕹️ MENÚ DE BOTONES INTERACTIVOS (REDIRECCIONES) */
         .menu-grid {
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
 
-        /* Botón de enlace estilo Apple Liquid Glass */
         .hub-btn {
             display: flex;
             align-items: center;
@@ -106,13 +283,11 @@
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Variación para los botones grupales/especiales */
         .hub-btn.featured {
             background: rgba(255, 183, 0, 0.04);
             border-color: rgba(255, 183, 0, 0.15);
         }
 
-        /* Animaciones al pasar el ratón por encima */
         .hub-btn:hover {
             background: rgba(255, 255, 255, 0.08);
             border-color: rgba(255, 255, 255, 0.18);
@@ -126,7 +301,6 @@
             color: #000;
         }
 
-        /* Flechita decorativa a la derecha */
         .btn-arrow {
             font-size: 14px;
             opacity: 0.4;
@@ -142,6 +316,31 @@
 <body>
 
     <div class="bg-glow"></div>
+
+    <div class="stats-bar">
+        <div class="stats-brand">
+            <div class="brand-logo">LG</div>
+            <div class="brand-text">LA<br>G4NG</div>
+        </div>
+
+        <div class="stats-cards-box">
+            <div class="stat-card">
+                <span class="number">3</span>
+                <span class="label">Canales Online</span>
+            </div>
+            <div class="stat-card live-viewers">
+                <span class="number">1272</span>
+                <span class="label">Viewers en Directo</span>
+            </div>
+        </div>
+
+        <div class="stats-controls">
+            <div class="mc-toggle-btn" id="mcToggle">
+                <span class="mc-label" id="mcLabel">Minecraft Off</span>
+                <div class="mc-switch"></div>
+            </div>
+        </div>
+    </div>
 
     <div class="hub-container">
         <div class="hub-title">LA G4NG HUB</div>
@@ -178,6 +377,20 @@
             </nav>
         </div>
     </div>
+
+    <script>
+        const mcToggle = document.getElementById('mcToggle');
+        const mcLabel = document.getElementById('mcLabel');
+
+        mcToggle.addEventListener('click', () => {
+            mcToggle.classList.toggle('active');
+            if(mcToggle.classList.contains('active')) {
+                mcLabel.textContent = 'Minecraft On';
+            } else {
+                mcLabel.textContent = 'Minecraft Off';
+            }
+        });
+    </script>
 
 </body>
 </html>
