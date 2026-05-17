@@ -24,7 +24,7 @@
             flex-direction: column;
         }
 
-        /* 🏷️ CABECERA EN LÍNEA: NOMBRE + BOTONES DE NAVEGACIÓN */
+        /* 🏷️ CABECERA EN LÍNEA CORREGIDA */
         .streamer-header {
             width: 100%;
             padding: 8px 16px;
@@ -34,28 +34,25 @@
             -webkit-backdrop-filter: blur(20px);
             display: flex;
             align-items: center;
-            justify-content: space-between; /* Nombre a la izquierda, botones a la derecha */
+            justify-content: space-between;
             box-shadow: 0 4px 20px rgba(0,0,0,0.4);
             z-index: 10;
             flex-shrink: 0;
         }
 
-        /* Nombre del canal actual */
         .channel-name {
             font-size: 14px;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            color: #ffb700; /* Oro premium */
+            color: #ffb700;
         }
 
-        /* Barra de navegación superior */
         .nav-bar {
             display: flex;
             gap: 5px;
         }
 
-        /* Botones estilo pestañas Liquid Glass */
         .nav-link {
             text-decoration: none;
             background: rgba(255, 255, 255, 0.04);
@@ -75,7 +72,6 @@
             border-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* Estilo del botón de la página en la que estás actualmente */
         .nav-link.active {
             color: #000;
             background: #ffb700;
@@ -83,7 +79,7 @@
             box-shadow: 0 2px 8px rgba(255, 183, 0, 0.3);
         }
 
-        /* 🗃️ CONTENEDOR MÁSCARA (CORTA TODO EL RELLENO DE TWITCH) */
+        /* 🗃️ MÁSCARA AJUSTADA PARA ELIMINAR EL ANUNCIO INTERNO */
         .chat-mask {
             width: 100%;
             flex-grow: 1;
@@ -92,13 +88,13 @@
             overflow: hidden;
         }
 
-        /* 🚀 EL TRUCO DEL RECORTE TOTAL */
+        /* 🚀 RECORTE RECALCULADO: Subimos más el Top para esconder el banner de Crunchyroll */
         .chat-mask iframe {
             position: absolute;
             width: 106%;
             left: -3%;
-            height: calc(100% + 195px);
-            top: -115px; /* Elimina la barra superior de Twitch y la inferior de enviar mensaje */
+            height: calc(100% + 250px);
+            top: -165px; /* De -115px pasamos a -165px para ocultar el bloque intruso */
             border: none;
             background: transparent;
         }
@@ -108,7 +104,6 @@
 
     <div class="streamer-header">
         <div class="channel-name">Lopezfnx</div>
-        
         <nav class="nav-bar">
             <a href="todos.html" class="nav-link">Todos</a>
             <a href="foxtergg.html" class="nav-link">Foxter</a>
@@ -124,8 +119,6 @@
         window.addEventListener('DOMContentLoaded', () => {
             const currentDomain = window.location.hostname;
             const container = document.getElementById('chatContainer');
-            
-            // Carga el chat incrustado de lopezfnx
             container.innerHTML = `
                 <iframe 
                     src="https://www.twitch.tv/embed/lopezfnx/chat?parent=${currentDomain}&darkpopout"
