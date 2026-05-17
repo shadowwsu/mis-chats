@@ -24,23 +24,63 @@
             flex-direction: column;
         }
 
-        /* 🏷️ CABECERA PREMIUM ESTILO APPLE */
+        /* 🏷️ CABECERA EN LÍNEA: NOMBRE + BOTONES DE NAVEGACIÓN */
         .streamer-header {
             width: 100%;
-            padding: 10px 0;
+            padding: 8px 16px;
             background: rgba(255, 255, 255, 0.03);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            text-align: center;
-            font-size: 14px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #ffb700; /* Dorado premium */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             box-shadow: 0 4px 20px rgba(0,0,0,0.4);
             z-index: 10;
             flex-shrink: 0;
+        }
+
+        /* Nombre del canal actual */
+        .channel-name {
+            font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #ffb700; /* Oro premium */
+        }
+
+        /* Barra de navegación superior */
+        .nav-bar {
+            display: flex;
+            gap: 5px;
+        }
+
+        /* Botones estilo pestañas Liquid Glass */
+        .nav-link {
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.5);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Estilo del botón de la página en la que estás actualmente */
+        .nav-link.active {
+            color: #000;
+            background: #ffb700;
+            border-color: #ffb700;
+            box-shadow: 0 2px 8px rgba(255, 183, 0, 0.3);
         }
 
         /* 🗃️ CONTENEDOR MÁSCARA (CORTA TODO EL RELLENO DE TWITCH) */
@@ -58,7 +98,7 @@
             width: 106%;
             left: -3%;
             height: calc(100% + 195px);
-            top: -115px; /* Sube el chat para saltarse anuncios, bits y la X */
+            top: -115px;
             border: none;
             background: transparent;
         }
@@ -66,7 +106,17 @@
 </head>
 <body>
 
-    <div class="streamer-header">FoxTerGG</div>
+    <div class="streamer-header">
+        <div class="channel-name">FoxTerGG</div>
+        
+        <nav class="nav-bar">
+            <a href="todos.html" class="nav-link">Todos</a>
+            <a href="foxtergg.html" class="nav-link active">Foxter</a>
+            <a href="elcalvolol.html" class="nav-link">Calvo</a>
+            <a href="index.html" class="nav-link">Lopez</a>
+            <a href="franbeuve.html" class="nav-link">Fran</a>
+        </nav>
+    </div>
 
     <div class="chat-mask" id="chatContainer"></div>
 
@@ -75,7 +125,7 @@
             const currentDomain = window.location.hostname;
             const container = document.getElementById('chatContainer');
             
-            // Carga directamente el chat incrustado de FoxTerGG
+            // Carga el chat incrustado de FoxTerGG
             container.innerHTML = `
                 <iframe 
                     src="https://www.twitch.tv/embed/FoxTerGG/chat?parent=${currentDomain}&darkpopout"
