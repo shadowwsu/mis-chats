@@ -146,6 +146,7 @@
             margin-bottom: 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25);
             z-index: 10;
+            transition: all 0.4s ease;
         }
 
         /* CUERPO DEL CHAT DE CRISTAL OSCURO */
@@ -157,22 +158,29 @@
             -webkit-backdrop-filter: blur(40px) saturate(150%);
             border: 1px solid var(--border-glass);
             border-radius: 24px;
-            overflow: hidden;
+            overflow: hidden; /* Mantiene el recorte del iframe a raya */
             position: relative;
             box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5), inset 0 1.5px 0 rgba(255, 255, 255, 0.1);
         }
 
+        /* ✂️ CONTENEDOR MÁSCARA PARA OCULTAR LA BARRA DE ENVIAR */
         .iframe-container {
             width: 100%;
             height: 100%;
             background: transparent;
+            overflow: hidden;
+            position: relative;
         }
 
+        /* El truco: Hacemos el iframe más alto para empujar el input y las cookies fuera del lienzo */
         iframe {
             width: 100%;
-            height: 100%;
+            height: calc(100% + 88px); 
             border: none;
             background: transparent;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
 
         /* BOTÓN REDONDO DE SALIDA */
@@ -206,15 +214,25 @@
             transform: scale(1.05);
         }
 
+        /* 🖥️ MEJORAS CUANDO EL FULLSCREEN ESTÁ ACTIVO */
         body.fullscreen-active .dock-wrapper {
             transform: translate(-50%, -100px);
             opacity: 0;
             pointer-events: none;
         }
 
+        /* Reducimos drásticamente el espacio de arriba (de 110px a 24px) */
         body.fullscreen-active .workspace {
-            padding: 75px 20px 20px 20px !important;
+            padding: 24px 24px 24px 24px !important;
             gap: 15px !important;
+        }
+
+        /* Ajustamos las etiquetas para que queden finas y no coman espacio arriba */
+        body.fullscreen-active .liquid-tag {
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            font-size: 12px;
+            padding: 4px 16px;
         }
 
         body.fullscreen-active .glass-body {
