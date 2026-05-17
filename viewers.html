@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LA G4NG // Live Stats Animado</title>
+    <title>LA G4NG // Live Stats REAL</title>
     
     <style>
         * {
@@ -17,7 +17,7 @@
         body, html {
             width: 100%;
             height: 100%;
-            background: #06070a; /* Fondo ultra oscuro Apple */
+            background: #06070a;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             color: #f5f5f7;
             display: flex;
@@ -26,7 +26,6 @@
             padding: 12px;
         }
 
-        /* 📊 BARRA PRINCIPAL COMPACTA Y ULTRA ADAPTABLE */
         .stats-bar {
             width: 100%;
             height: 100%;
@@ -42,7 +41,6 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.05);
         }
 
-        /* Bloque Izquierdo: Identidad de marca */
         .stats-brand {
             display: flex;
             align-items: center;
@@ -73,7 +71,7 @@
             text-transform: uppercase;
         }
 
-        /* 🎯 CENTRALIZACIÓN ABSOLUTA DEL CONTENIDO */
+        /* CENTRO UNIFICADO */
         .center-display {
             display: flex;
             flex-direction: column;
@@ -84,7 +82,6 @@
             margin: 0 20px;
         }
 
-        /* Contenedor en fila para los números grandes */
         .counters-row {
             display: flex;
             align-items: center;
@@ -102,7 +99,6 @@
             font-weight: 900;
             color: #fff;
             letter-spacing: -1px;
-            transition: all 0.3s ease;
         }
 
         .counter-number.live {
@@ -118,7 +114,7 @@
             color: rgba(255, 255, 255, 0.4);
         }
 
-        /* 🔴 SECCIÓN EN VIVO (QUIÉNES ESTÁN EN STREAM REALMENTE) */
+        /* STREAMERS EN VIVO EN TIEMPO REAL */
         .live-streamers {
             display: flex;
             align-items: center;
@@ -127,19 +123,19 @@
             padding: 4px 12px;
             border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.05);
+            min-height: 23px;
         }
 
         .streamer-tag {
             font-size: 10px;
             font-weight: 700;
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 0.8);
             display: flex;
             align-items: center;
             gap: 5px;
             text-transform: uppercase;
         }
 
-        /* Puntos rojos animados de directo */
         .pulse-dot {
             width: 5px;
             height: 5px;
@@ -155,13 +151,21 @@
             100% { transform: scale(0.9); opacity: 0.6; }
         }
 
-        /* Separador intermedio */
         .tag-sep {
             color: rgba(255, 255, 255, 0.15);
             font-size: 10px;
         }
 
-        /* 🏠 BOTÓN DERECHO PARA VOLVER AL INDEX ANTERIOR */
+        /* Mensaje de espera o sin datos */
+        .no-live {
+            font-size: 10px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* BOTÓN REGRESAR */
         .back-btn {
             display: flex;
             align-items: center;
@@ -176,28 +180,19 @@
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             flex-shrink: 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
 
         .back-btn:hover {
             color: #000;
-            background: #ffb700; /* Encendido en Oro */
+            background: #ffb700;
             border-color: #ffb700;
             transform: scale(1.05);
-            box-shadow: 0 0 12px rgba(255, 183, 0, 0.4);
         }
 
         .back-icon {
             width: 18px;
             height: 18px;
             fill: currentColor;
-        }
-
-        /* Ajustes responsivos para pantallas ultra bajas */
-        @media (max-height: 180px) {
-            .counters-row { gap: 16px; }
-            .counter-number { font-size: 24px; }
-            .live-streamers { display: none; } /* Oculta la sublínea si no cabe */
         }
     </style>
 </head>
@@ -211,29 +206,23 @@
         </div>
 
         <div class="center-display">
-            
             <div class="counters-row">
                 <div class="counter-group">
-                    <span class="counter-number" id="numChannels">0</span>
+                    <span class="counter-number" id="numChannels">-</span>
                     <span class="counter-label">Online</span>
                 </div>
                 <div class="counter-group">
-                    <span class="counter-number live" id="numViewers">0</span>
+                    <span class="counter-number live" id="numViewers">-</span>
                     <span class="counter-label">Viewers</span>
                 </div>
             </div>
 
-            <div class="live-streamers">
-                <div class="streamer-tag"><span class="pulse-dot"></span> FoxTerGG</div>
-                <span class="tag-sep">|</span>
-                <div class="streamer-tag"><span class="pulse-dot"></span> lopezfnx</div>
-                <span class="tag-sep">|</span>
-                <div class="streamer-tag"><span class="pulse-dot"></span> franbeuve</div>
+            <div class="live-streamers" id="liveContainer">
+                <span class="no-live">Conectando con Twitch API...</span>
             </div>
-
         </div>
 
-        <a href="index.html" class="back-btn" title="Regresar al Dashboard Central">
+        <a href="index.html" class="back-btn">
             <svg class="back-icon" viewBox="0 0 24 24">
                 <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
             </svg>
@@ -242,43 +231,99 @@
     </div>
 
     <script>
-        // Configuración inicial de valores reales
-        let targetChannels = 3;
-        let targetViewers = 1272;
+        // 🔑 CONFIGURACIÓN DE TWITCH DEVELOPERS
+        // Para que funcione de verdad, ve a dev.twitch.tv, crea una app y pega aquí tus claves:
+        const TWITCH_CLIENT_ID = 'pri5etevynchqv1cb3f1h5iutrf050'; 
+        const TWITCH_SECRET    = 'lq94jxv0jrhq5635z4gwvqjldgtwy4';
+        
+        // Lista de canales de LA G4NG a trackear
+        const streamers = ['foxtergg', 'lopezfnx', 'elcalvolol', 'franbeuve'];
 
-        // Efecto CountUp animado al cargar la página
-        function animateValue(obj, start, end, duration) {
-            let startTimestamp = null;
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                obj.innerHTML = Math.floor(progress * (end - start) + start);
-                if (progress < 1) {
-                    window.requestAnimationFrame(step);
-                }
-            };
-            window.requestAnimationFrame(step);
-        }
-
-        // Lanzar animaciones iniciales
         const channelsEl = document.getElementById('numChannels');
         const viewersEl = document.getElementById('numViewers');
+        const containerEl = document.getElementById('liveContainer');
 
-        setTimeout(() => {
-            animateValue(channelsEl, 0, targetChannels, 1200);
-            animateValue(viewersEl, 0, targetViewers, 2000);
-        }, 200);
+        // Función para pedirle el token de acceso seguro a Twitch
+        async function getTwitchToken() {
+            if(TWITCH_CLIENT_ID === 'pri5etevynchqv1cb3f1h5iutrf050') return null;
+            try {
+                const res = await fetch(`https://id.twitch.tv/oauth2/token?client_id=${TWITCH_CLIENT_ID}&client_secret=${TWITCH_SECRET}&grant_type=client_credentials`, { method: 'POST' });
+                const data = await res.json();
+                return data.access_token;
+            } catch (e) {
+                console.error("Error obteniendo token de Twitch", e);
+                return null;
+            }
+        }
 
-        // Simulación de actualizaciones automáticas en vivo (Fluctuaciones reales de viewers)
-        setInterval(() => {
-            // Varía los espectadores de forma aleatoria (+ o - entre 1 y 15) para que parezca vivo
-            let fluctuation = Math.floor(Math.random() * 30) - 15;
-            targetViewers += fluctuation;
+        // Función Maestra para comprobar quién está prendido de verdad
+        async function checkLiveStats() {
+            const token = await getTwitchToken();
             
-            // Animación rápida de cambio
-            let current = parseInt(viewersEl.innerHTML);
-            animateValue(viewersEl, current, targetViewers, 800);
-        }, 4000); // Se refresca cada 4 segundos
+            // Si no hay claves reales configuradas, mostramos simulación inteligente para que no se rompa
+            if (!token) {
+                channelsEl.innerHTML = "0";
+                viewersEl.innerHTML = "0";
+                containerEl.innerHTML = '<span class="no-live">⚠️ Configura las claves de Twitch Dev</span>';
+                return;
+            }
+
+            try {
+                // Construye la query para preguntar por todos a la vez
+                const queryParams = streamers.map(name => `user_login=${name}`).join('&');
+                const res = await fetch(`https://api.twitch.tv/helix/streams?${queryParams}`, {
+                    headers: {
+                        'Client-ID': TWITCH_CLIENT_ID,
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const data = await res.json();
+                const activeStreams = data.data || [];
+
+                let totalViewers = 0;
+                let onlineCount = activeStreams.length;
+
+                if (onlineCount === 0) {
+                    channelsEl.innerHTML = "0";
+                    viewersEl.innerHTML = "0";
+                    containerEl.innerHTML = '<span class="no-live">Todos los canales están Offline 💤</span>';
+                } else {
+                    channelsEl.innerHTML = onlineCount;
+                    containerEl.innerHTML = ''; // Limpiar contenedor
+
+                    activeStreams.forEach((stream, index) => {
+                        totalViewers += stream.viewer_count;
+                        
+                        // Añadir tag del streamer
+                        const tag = document.createElement('div');
+                        tag.className = 'streamer-tag';
+                        tag.innerHTML = `<span class="pulse-dot"></span> ${stream.user_name}`;
+                        containerEl.appendChild(tag);
+
+                        // Añadir barra separadora si no es el último
+                        if (index < onlineCount - 1) {
+                            const sep = document.createElement('span');
+                            sep.className = 'tag-sep';
+                            sep.innerText = '|';
+                            containerEl.appendChild(sep);
+                        }
+                    });
+
+                    viewersEl.innerHTML = totalViewers;
+                }
+
+            } catch (error) {
+                console.error("Error consultando la API de Twitch", error);
+                containerEl.innerHTML = '<span class="no-live">❌ Error de conexión</span>';
+            }
+        }
+
+        // Ejecutar al cargar la página
+        window.addEventListener('DOMContentLoaded', () => {
+            checkLiveStats();
+            // Refrescar datos reales automáticamente cada 60 segundos (para no saturar la API)
+            setInterval(checkLiveStats, 60000);
+        });
     </script>
 
 </body>
