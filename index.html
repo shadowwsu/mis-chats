@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Hub // LA G4NG</title>
+    <title>LA G4NG // Live Stats REAL</title>
     
     <style>
         * {
@@ -11,59 +11,46 @@
             margin: 0;
             padding: 0;
             user-select: none;
+            overflow: hidden;
         }
 
         body, html {
             width: 100%;
             height: 100%;
-            background: #06070a; /* Fondo ultra oscuro Apple */
+            background: #06070a;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             color: #f5f5f7;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 12px;
-            overflow-x: hidden;
-            overflow-y: auto; /* Permite scroll sutil si la pantalla es extremadamente baja */
         }
 
-        /* 🌌 CONTENEDOR PRINCIPAL FLUIDO Y ADAPTABLE */
-        .dashboard-container {
-            width: 100%;
-            max-width: 1200px; /* Ancho máximo para pantallas grandes */
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            align-self: center;
-        }
-
-        /* 📊 BARRA SUPERIOR DE ESTADÍSTICAS */
         .stats-bar {
             width: 100%;
+            height: 100%;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.06);
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
             border-radius: 16px;
-            padding: 10px 20px;
+            padding: 0 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.05);
-            flex-wrap: wrap; /* Por si la pantalla es muy estrecha */
-            gap: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.05);
         }
 
-        /* Bloque Izquierdo: Identificador */
         .stats-brand {
             display: flex;
             align-items: center;
             gap: 12px;
+            flex-shrink: 0;
         }
 
         .brand-logo {
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             background: #121318;
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 50%;
@@ -77,262 +64,267 @@
         }
 
         .brand-text {
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 900;
             letter-spacing: 1.5px;
             line-height: 1.1;
             text-transform: uppercase;
         }
 
-        /* Bloque Central: Contadores fluidos horizontales */
-        .stats-cards-box {
+        /* CENTRO UNIFICADO */
+        .center-display {
             display: flex;
-            gap: 12px;
-            flex-grow: 1;
-            max-width: 600px;
-            justify-content: center;
-        }
-
-        .stat-mini-card {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 10px;
-            padding: 6px 12px;
-            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            min-width: 140px;
+            flex-grow: 1;
+            gap: 6px;
+            margin: 0 20px;
         }
 
-        .stat-mini-card .number {
-            font-size: 18px;
-            font-weight: 800;
+        .counters-row {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .counter-group {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .counter-number {
+            font-size: 32px;
+            font-weight: 900;
             color: #fff;
+            letter-spacing: -1px;
         }
 
-        .stat-mini-card .label {
-            font-size: 9px;
-            font-weight: 700;
+        .counter-number.live {
+            color: #ff3b30;
+            text-shadow: 0 0 15px rgba(255, 59, 48, 0.3);
+        }
+
+        .counter-label {
+            font-size: 10px;
+            font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: rgba(255, 255, 255, 0.4);
         }
 
-        /* Alerta roja de Viewers */
-        .stat-mini-card.live-viewers {
-            border-color: rgba(255, 59, 48, 0.15);
-            background: rgba(255, 59, 48, 0.02);
-        }
-
-        .stat-mini-card.live-viewers .number {
-            color: #ff3b30;
+        /* STREAMERS EN VIVO EN TIEMPO REAL */
+        .live-streamers {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            min-height: 23px;
         }
 
-        .stat-mini-card.live-viewers .number::before {
-            content: '';
-            width: 6px;
-            height: 6px;
+        .streamer-tag {
+            font-size: 10px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            text-transform: uppercase;
+        }
+
+        .pulse-dot {
+            width: 5px;
+            height: 5px;
             background: #ff3b30;
             border-radius: 50%;
             box-shadow: 0 0 8px #ff3b30;
+            animation: pulse 1.5s infinite ease-in-out;
         }
 
-        .stat-mini-card.live-viewers .label {
-            color: rgba(255, 59, 48, 0.6);
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.6; }
+            50% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 12px #ff3b30; }
+            100% { transform: scale(0.9); opacity: 0.6; }
         }
 
-        /* Icono de la personita a la derecha */
-        .right-indicator {
+        .tag-sep {
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 10px;
+        }
+
+        /* Mensaje de espera o sin datos */
+        .no-live {
+            font-size: 10px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* BOTÓN REGRESAR */
+        .back-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 36px;
-            height: 36px;
+            text-decoration: none;
+            width: 38px;
+            height: 38px;
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 50%;
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .person-icon {
-            width: 16px;
-            height: 16px;
-            fill: currentColor;
-        }
-
-        /* 🎛️ PANEL INFERIOR: SECCIÓN DE ACCESOS DIRECTOS */
-        .menu-panel {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.01);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 16px;
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .section-label {
-            font-size: 10px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: rgba(255, 255, 255, 0.3);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-            padding-bottom: 6px;
-        }
-
-        /* Rejilla adaptativa automática */
-        .buttons-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 10px;
-            width: 100%;
-        }
-
-        /* Botones estilo Apple Liquid Glass */
-        .hub-btn {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            text-decoration: none;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 14px 16px;
-            border-radius: 12px;
-            color: #f5f5f7;
-            font-size: 13px;
-            font-weight: 600;
+            color: rgba(255, 255, 255, 0.6);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            flex-shrink: 0;
         }
 
-        /* Variación destacada Oro para los chats grupales */
-        .hub-btn.featured {
-            background: rgba(255, 183, 0, 0.04);
-            border-color: rgba(255, 183, 0, 0.15);
-            color: #ffb700;
-        }
-
-        /* 🔴 NUEVO BOTÓN EXCLUSIVO DE VIEWERS IN CON EL ROJO NEON */
-        .hub-btn.viewers-btn {
-            background: rgba(255, 59, 48, 0.04);
-            border-color: rgba(255, 59, 48, 0.15);
-            color: #ff3b30;
-        }
-
-        /* Animaciones hover */
-        .hub-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.18);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        }
-
-        .hub-btn.featured:hover {
+        .back-btn:hover {
+            color: #000;
             background: #ffb700;
             border-color: #ffb700;
-            color: #000;
-            box-shadow: 0 0 12px rgba(255, 183, 0, 0.3);
+            transform: scale(1.05);
         }
 
-        .hub-btn.viewers-btn:hover {
-            background: #ff3b30;
-            border-color: #ff3b30;
-            color: #fff;
-            box-shadow: 0 0 12px rgba(255, 59, 48, 0.4);
-        }
-
-        .btn-arrow {
-            font-size: 12px;
-            opacity: 0.4;
-            transition: transform 0.2s ease;
-        }
-
-        .hub-btn:hover .btn-arrow {
-            opacity: 1;
-            transform: translateX(2px);
-        }
-
-        /* Soporte para pantallas bajas */
-        @media (max-height: 250px) {
-            body { padding: 6px; }
-            .dashboard-container { gap: 8px; }
-            .menu-panel { padding: 10px; gap: 8px; }
-            .hub-btn { padding: 10px 12px; font-size: 12px; }
+        .back-icon {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
         }
     </style>
 </head>
 <body>
 
-    <div class="dashboard-container">
+    <div class="stats-bar">
         
-        <header class="stats-bar">
-            <div class="stats-brand">
-                <div class="brand-logo">LG</div>
-                <div class="brand-text">LA<br>G4NG</div>
-            </div>
+        <div class="stats-brand">
+            <div class="brand-logo">LG</div>
+            <div class="brand-text">LA<br>G4NG</div>
+        </div>
 
-            <div class="stats-cards-box">
-                <div class="stat-mini-card">
-                    <span class="number">3</span>
-                    <span class="label">Canales Online</span>
+        <div class="center-display">
+            <div class="counters-row">
+                <div class="counter-group">
+                    <span class="counter-number" id="numChannels">-</span>
+                    <span class="counter-label">Online</span>
                 </div>
-                <div class="stat-mini-card live-viewers">
-                    <span class="number">1272</span>
-                    <span class="label">Viewers</span>
+                <div class="counter-group">
+                    <span class="counter-number live" id="numViewers">-</span>
+                    <span class="counter-label">Viewers</span>
                 </div>
             </div>
 
-            <div class="right-indicator">
-                <svg class="person-icon" viewBox="0 0 24 24">
-                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                </svg>
+            <div class="live-streamers" id="liveContainer">
+                <span class="no-live">Conectando con Twitch API...</span>
             </div>
-        </header>
+        </div>
 
-        <main class="menu-panel">
-            <div class="section-label">PANEL DE CONTROL MULTI-RESOLUCIÓN</div>
-            
-            <div class="buttons-grid">
-                <a href="viewers.html" class="hub-btn viewers-btn">
-                    <span>📊 Viewers Totales</span>
-                    <span class="btn-arrow">➔</span>
-                </a>
-
-                <a href="todos_horizontal.html" class="hub-btn featured">
-                    <span>Mosaico Horizontal</span>
-                    <span class="btn-arrow">➔</span>
-                </a>
-                <a href="todos_vertical.html" class="hub-btn featured">
-                    <span>Mosaico Vertical</span>
-                    <span class="btn-arrow">➔</span>
-                </a>
-
-                <a href="foxtergg.html" class="hub-btn">
-                    <span>FoxTerGG</span>
-                    <span class="btn-arrow">➔</span>
-                </a>
-                <a href="lopezfnx.html" class="hub-btn">
-                    <span>Lopezfnx</span>
-                    <span class="btn-arrow">➔</span>
-                </a>
-                <a href="elcalvolol.html" class="hub-btn">
-                    <span>Elcalvolol</span>
-                    <span class="btn-arrow">➔</span>
-                </a>
-                <a href="franbeuve.html" class="hub-btn">
-                    <span>Franbeuve</span>
-                    <span class="btn-arrow">➔</span>
-                </a>
-            </div>
-        </main>
-
+        <a href="index.html" class="back-btn">
+            <svg class="back-icon" viewBox="0 0 24 24">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+        </a>
+        
     </div>
+
+    <script>
+        // 🔑 CONFIGURACIÓN DE TWITCH DEVELOPERS
+        // Para que funcione de verdad, ve a dev.twitch.tv, crea una app y pega aquí tus claves:
+        const TWITCH_CLIENT_ID = 'TU_CLIENT_ID_AQUI'; 
+        const TWITCH_SECRET    = 'TU_SECRET_AQUI';
+        
+        // Lista de canales de LA G4NG a trackear
+        const streamers = ['foxtergg', 'lopezfnx', 'elcalvolol', 'franbeuve'];
+
+        const channelsEl = document.getElementById('numChannels');
+        const viewersEl = document.getElementById('numViewers');
+        const containerEl = document.getElementById('liveContainer');
+
+        // Función para pedirle el token de acceso seguro a Twitch
+        async function getTwitchToken() {
+            if(TWITCH_CLIENT_ID === 'TU_CLIENT_ID_AQUI') return null;
+            try {
+                const res = await fetch(`https://id.twitch.tv/oauth2/token?client_id=${TWITCH_CLIENT_ID}&client_secret=${TWITCH_SECRET}&grant_type=client_credentials`, { method: 'POST' });
+                const data = await res.json();
+                return data.access_token;
+            } catch (e) {
+                console.error("Error obteniendo token de Twitch", e);
+                return null;
+            }
+        }
+
+        // Función Maestra para comprobar quién está prendido de verdad
+        async function checkLiveStats() {
+            const token = await getTwitchToken();
+            
+            // Si no hay claves reales configuradas, mostramos simulación inteligente para que no se rompa
+            if (!token) {
+                channelsEl.innerHTML = "0";
+                viewersEl.innerHTML = "0";
+                containerEl.innerHTML = '<span class="no-live">⚠️ Configura las claves de Twitch Dev</span>';
+                return;
+            }
+
+            try {
+                // Construye la query para preguntar por todos a la vez
+                const queryParams = streamers.map(name => `user_login=${name}`).join('&');
+                const res = await fetch(`https://api.twitch.tv/helix/streams?${queryParams}`, {
+                    headers: {
+                        'Client-ID': TWITCH_CLIENT_ID,
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const data = await res.json();
+                const activeStreams = data.data || [];
+
+                let totalViewers = 0;
+                let onlineCount = activeStreams.length;
+
+                if (onlineCount === 0) {
+                    channelsEl.innerHTML = "0";
+                    viewersEl.innerHTML = "0";
+                    containerEl.innerHTML = '<span class="no-live">Todos los canales están Offline 💤</span>';
+                } else {
+                    channelsEl.innerHTML = onlineCount;
+                    containerEl.innerHTML = ''; // Limpiar contenedor
+
+                    activeStreams.forEach((stream, index) => {
+                        totalViewers += stream.viewer_count;
+                        
+                        // Añadir tag del streamer
+                        const tag = document.createElement('div');
+                        tag.className = 'streamer-tag';
+                        tag.innerHTML = `<span class="pulse-dot"></span> ${stream.user_name}`;
+                        containerEl.appendChild(tag);
+
+                        // Añadir barra separadora si no es el último
+                        if (index < onlineCount - 1) {
+                            const sep = document.createElement('span');
+                            sep.className = 'tag-sep';
+                            sep.innerText = '|';
+                            containerEl.appendChild(sep);
+                        }
+                    });
+
+                    viewersEl.innerHTML = totalViewers;
+                }
+
+            } catch (error) {
+                console.error("Error consultando la API de Twitch", error);
+                containerEl.innerHTML = '<span class="no-live">❌ Error de conexión</span>';
+            }
+        }
+
+        // Ejecutar al cargar la página
+        window.addEventListener('DOMContentLoaded', () => {
+            checkLiveStats();
+            // Refrescar datos reales automáticamente cada 60 segundos (para no saturar la API)
+            setInterval(checkLiveStats, 60000);
+        });
+    </script>
 
 </body>
 </html>
