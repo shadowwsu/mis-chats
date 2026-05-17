@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todos los Chats // Vertical Grid</title>
+    <title>Todos los Chats // Horizontal Grid</title>
     
     <style>
         * {
@@ -11,6 +11,7 @@
             margin: 0;
             padding: 0;
             user-select: none;
+            overflow: hidden;
         }
 
         body, html {
@@ -21,13 +22,12 @@
             color: #f5f5f7;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
         }
 
-        /* 🏷️ CABECERA EN LÍNEA: NOMBRE + BOTONES DE NAVEGACIÓN */
+        /* 🏷️ CABECERA PREMIUM HORIZONTAL ACCESIBLE */
         .streamer-header {
             width: 100%;
-            padding: 8px 16px;
+            padding: 10px 16px;
             background: rgba(255, 255, 255, 0.03);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(20px);
@@ -40,28 +40,25 @@
             flex-shrink: 0;
         }
 
-        /* Nombre de la sección actual */
         .channel-name {
             font-size: 14px;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            color: #ffb700; /* Oro premium */
+            color: #ffb700;
         }
 
-        /* Barra de navegación superior */
         .nav-bar {
             display: flex;
-            gap: 5px;
+            gap: 6px;
         }
 
-        /* Botones estilo pestañas Liquid Glass */
         .nav-link {
             text-decoration: none;
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.08);
             color: rgba(255, 255, 255, 0.5);
-            padding: 4px 10px;
+            padding: 5px 12px;
             border-radius: 8px;
             font-size: 11px;
             font-weight: 600;
@@ -75,7 +72,6 @@
             border-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* Estilo del botón activo */
         .nav-link.active {
             color: #000;
             background: #ffb700;
@@ -83,61 +79,58 @@
             box-shadow: 0 2px 8px rgba(255, 183, 0, 0.3);
         }
 
-        /* 🗃️ CONTENEDOR MULTI-CHAT VERTICAL (Con scroll interno) */
-        .workspace-scroll {
-            width: 100%;
+        /* 🎚️ REJILLA DE CRISTAL 2X2 PARA PANTALLAS HORIZONTALES */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 10px;
             flex-grow: 1;
-            overflow-y: auto; /* Permite hacer scroll vertical por los chats */
+            padding: 10px;
+            background: transparent;
+        }
+
+        /* Caja contenedora de cada chat */
+        .chat-card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            padding: 12px;
         }
 
-        /* Mini-cabecera interna para separar visualmente cada chat */
-        .chat-separator {
-            font-size: 11px;
+        /* Etiqueta interna con el nombre del streamer */
+        .chat-label {
+            position: absolute;
+            top: 6px;
+            left: 10px;
+            font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
             color: rgba(255, 255, 255, 0.3);
-            padding-left: 8px;
-            margin-top: 4px;
+            z-index: 5;
+            letter-spacing: 1px;
         }
 
-        /* Caja de máscara individual para cada iframe */
-        .chat-mask-box {
+        /* Máscara de recorte optimizada para la escala horizontal */
+        .chat-mask {
             width: 100%;
-            height: 400px; /* Alto fijo ideal para cada bloque de chat */
+            height: 100%;
             position: relative;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 16px;
             overflow: hidden;
-            flex-shrink: 0;
         }
 
-        /* 🚀 EL TRUCO DEL RECORTE TOTAL POR IFRAME */
-        .chat-mask-box iframe {
+        /* Ajuste de márgenes perfecto para eliminar publicidad y la barra morada */
+        .chat-mask iframe {
             position: absolute;
-            width: 106%;
-            left: -3%;
-            height: calc(100% + 195px);
-            top: -115px;
+            width: 104%;
+            left: -2%;
+            height: calc(100% + 210px);
+            top: -145px; /* Compensa la deformación horizontal ocultando el banner intruso */
             border: none;
             background: transparent;
-        }
-
-        /* Personalización fina del scrollbar para Minecraft */
-        .workspace-scroll::-webkit-scrollbar {
-            width: 6px;
-        }
-        .workspace-scroll::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .workspace-scroll::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
         }
     </style>
 </head>
@@ -145,7 +138,6 @@
 
     <div class="streamer-header">
         <div class="channel-name">Todos los chats</div>
-        
         <nav class="nav-bar">
             <a href="todos.html" class="nav-link active">Todos</a>
             <a href="foxtergg.html" class="nav-link">Foxter</a>
@@ -155,32 +147,40 @@
         </nav>
     </div>
 
-    <main class="workspace-scroll" id="multiWorkspace">
+    <main class="grid-container">
         
-        <div class="chat-separator">FoxTerGG</div>
-        <div class="chat-mask-box" id="box-foxtergg"></div>
+        <div class="chat-card">
+            <div class="chat-label">FoxTerGG</div>
+            <div class="chat-mask" id="box-foxtergg"></div>
+        </div>
 
-        <div class="chat-separator">lopezfnx</div>
-        <div class="chat-mask-box" id="box-lopezfnx"></div>
+        <div class="chat-card">
+            <div class="chat-label">lopezfnx</div>
+            <div class="chat-mask" id="box-lopezfnx"></div>
+        </div>
 
-        <div class="chat-separator">elcalvolol</div>
-        <div class="chat-mask-box" id="box-elcalvolol"></div>
+        <div class="chat-card">
+            <div class="chat-label">elcalvolol</div>
+            <div class="chat-mask" id="box-elcalvolol"></div>
+        </div>
 
-        <div class="chat-separator">franbeuve</div>
-        <div class="chat-mask-box" id="box-franbeuve"></div>
+        <div class="chat-card">
+            <div class="chat-label">franbeuve</div>
+            <div class="chat-mask" id="box-franbeuve"></div>
+        </div>
 
     </main>
 
     <script>
-        const channels = ['foxtergg', 'lopezfnx', 'elcalvolol', 'franbeuve'];
+        const targets = ['foxtergg', 'lopezfnx', 'elcalvolol', 'franbeuve'];
 
         window.addEventListener('DOMContentLoaded', () => {
             const currentDomain = window.location.hostname;
 
-            channels.forEach(channel => {
-                const box = document.getElementById(`box-${channel}`);
-                if (box) {
-                    box.innerHTML = `
+            targets.forEach(channel => {
+                const mask = document.getElementById(`box-${channel}`);
+                if (mask) {
+                    mask.innerHTML = `
                         <iframe 
                             src="https://www.twitch.tv/embed/${channel}/chat?parent=${currentDomain}&darkpopout"
                             height="100%"
