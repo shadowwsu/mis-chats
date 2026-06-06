@@ -3,78 +3,167 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VDO Ninja Delay 4s</title>
+<title>Shadow Web</title>
 
 <style>
-html,body{
+*{
     margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,body{
     width:100%;
     height:100%;
     overflow:hidden;
     background:#000;
+    font-family:Segoe UI,Arial,sans-serif;
 }
+
 iframe{
     width:100%;
     height:100%;
-    border:0;
+    border:none;
 }
-#status{
+
+#loading{
     position:fixed;
-    top:10px;
-    left:10px;
-    background:rgba(0,0,0,.7);
-    color:white;
-    padding:8px 12px;
-    font-family:Arial;
+    inset:0;
+    background:
+        radial-gradient(circle at center,#111 0%,#050505 70%,#000 100%);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+    transition:opacity .8s ease;
+}
+
+.logo{
+    font-size:68px;
+    font-weight:800;
+    letter-spacing:6px;
+    color:#fff;
+
+    text-shadow:
+        0 0 10px rgba(255,255,255,.4),
+        0 0 30px rgba(255,255,255,.2),
+        0 0 60px rgba(255,255,255,.15);
+
+    animation:pulse 2s infinite;
+}
+
+.status{
+    margin-top:18px;
+    font-size:22px;
+    color:#d0d0d0;
+}
+
+.sub{
+    margin-top:12px;
+    font-size:13px;
+    color:#777;
+    letter-spacing:2px;
+    text-transform:uppercase;
+}
+
+.dots::after{
+    content:"";
+    animation:dots 1.5s infinite;
+}
+
+.fade-out{
+    opacity:0;
+    pointer-events:none;
+}
+
+#connected{
+    position:fixed;
+    top:12px;
+    left:12px;
+
+    background:rgba(0,0,0,.35);
+    backdrop-filter:blur(6px);
+
+    color:rgba(255,255,255,.65);
+
+    padding:6px 10px;
+    border-radius:8px;
+
+    font-size:12px;
+    letter-spacing:.5px;
+
+    opacity:0;
+    transition:opacity .8s ease;
+
     z-index:9999;
+}
+
+#connected.show{
+    opacity:1;
+}
+
+@keyframes pulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.03);}
+    100%{transform:scale(1);}
+}
+
+@keyframes dots{
+    0%{content:"";}
+    33%{content:".";}
+    66%{content:"..";}
+    100%{content:"...";}
 }
 </style>
 </head>
 <body>
 
-<div id="status">Conectando...</div>
+<div id="loading">
+    <div class="logo">SHADOW</div>
+
+    <div class="status">
+        Conectando<span class="dots"></span>
+    </div>
+
+    <div class="sub">
+        Shadow Web • Inicializando conexión
+    </div>
+</div>
+
+<div id="connected">
+    ● Conectado a Shadow Web
+</div>
 
 <iframe
-    id="vdo"
-    allow="autoplay;camera;microphone;fullscreen;display-capture"
-    src="https://vdo.ninja/?view=YbHy8kq&cleanoutput&transparent&autostart">
+id="vdo"
+allow="autoplay;camera;microphone;fullscreen;display-capture"
+src="https://vdo.ninja/?view=YbHy8kq&cleanoutput&transparent&autostart">
 </iframe>
 
 <script>
 
+const overlay = document.getElementById("loading");
+const connected = document.getElementById("connected");
 const iframe = document.getElementById("vdo");
-const status = document.getElementById("status");
 
-window.addEventListener("message",(e)=>{
+setTimeout(() => {
 
-    if(e.source !== iframe.contentWindow) return;
-
-    console.log("VDO:",e.data);
-
-    if(e.data && e.data.action){
-
-        status.innerText = "Conectado";
-
+    try{
         iframe.contentWindow.postMessage({
-            setBufferDelay: 4000,
-            UUID: "*"
+            setBufferDelay:4500,
+            UUID:"*"
         },"*");
+    }catch(e){}
 
-        console.log("Delay 4000ms enviado");
-    }
+    overlay.classList.add("fade-out");
 
-});
+    setTimeout(()=>{
+        overlay.remove();
+        connected.classList.add("show");
+    },800);
 
-setTimeout(()=>{
-
-    iframe.contentWindow.postMessage({
-        setBufferDelay: 4000,
-        UUID: "*"
-    },"*");
-
-    status.innerText = "Delay aplicado";
-
-},10000);
+},4500);
 
 </script>
 
