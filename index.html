@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shadow Web</title>
+<title>Jcorko Stream</title>
 
 <style>
 html,body{
@@ -53,10 +53,14 @@ iframe{
 
 .brand{
     margin-top:14px;
-    color:#666;
+    color:#b16cff;
     font-size:15px;
     letter-spacing:3px;
     text-transform:uppercase;
+
+    text-shadow:
+        0 0 10px rgba(177,108,255,.5),
+        0 0 25px rgba(177,108,255,.25);
 }
 
 .progress{
@@ -73,9 +77,13 @@ iframe{
     display:block;
     width:40%;
     height:100%;
-    background:white;
+    background:#b16cff;
     border-radius:50px;
     animation:move 1.8s infinite;
+
+    box-shadow:
+        0 0 12px #b16cff,
+        0 0 24px #b16cff;
 }
 
 /* FLASH VERDE */
@@ -86,16 +94,13 @@ iframe{
 
     background:
         radial-gradient(circle,
-        rgba(0,255,100,.35) 0%,
-        rgba(0,255,100,.15) 40%,
+        rgba(0,255,100,.40) 0%,
+        rgba(0,255,100,.18) 40%,
         rgba(0,0,0,0) 100%);
 
     opacity:0;
-
     pointer-events:none;
-
     z-index:99998;
-
     transition:1s;
 }
 
@@ -107,7 +112,6 @@ iframe{
 
 #success{
     position:fixed;
-
     top:50%;
     left:50%;
 
@@ -117,21 +121,20 @@ iframe{
 
     border:1px solid rgba(0,255,100,.25);
 
-    padding:35px 55px;
+    padding:40px 60px;
 
     border-radius:22px;
 
     color:#66ff99;
 
-    font-size:48px;
-
+    font-size:52px;
     font-weight:700;
 
     text-align:center;
 
     box-shadow:
         0 0 40px rgba(0,255,100,.20),
-        0 0 100px rgba(0,255,100,.08);
+        0 0 120px rgba(0,255,100,.10);
 
     opacity:0;
 
@@ -148,7 +151,7 @@ iframe{
 }
 
 .success-icon{
-    font-size:80px;
+    font-size:90px;
     display:block;
     margin-bottom:10px;
 }
@@ -189,6 +192,11 @@ iframe{
     font-size:11px;
 }
 
+#statusText{
+    color:#66ff99;
+    font-weight:600;
+}
+
 /* ANIMACIONES */
 
 @keyframes move{
@@ -210,7 +218,7 @@ iframe{
     </div>
 
     <div class="brand">
-        Shadow Web
+        Jcorko Stream
     </div>
 
     <div class="progress"></div>
@@ -226,8 +234,8 @@ iframe{
 </div>
 
 <div id="status">
-    <div>● Conectado</div>
-    <small>Shadow Web</small>
+    <div id="statusText">● Conectado</div>
+    <small>Jcorko Stream</small>
 </div>
 
 <iframe
