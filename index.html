@@ -12,7 +12,7 @@ html,body{
     height:100%;
     overflow:hidden;
     background:#000;
-    font-family:Segoe UI,Arial,sans-serif;
+    font-family:'Segoe UI',Arial,sans-serif;
 }
 
 iframe{
@@ -21,7 +21,7 @@ iframe{
     border:0;
 }
 
-/* Pantalla de conexión */
+/* PANTALLA DE CARGA */
 
 #loading{
     position:fixed;
@@ -29,8 +29,8 @@ iframe{
     background:#000;
     display:flex;
     flex-direction:column;
-    align-items:center;
     justify-content:center;
+    align-items:center;
     z-index:99999;
     transition:opacity .8s ease;
 }
@@ -40,65 +40,130 @@ iframe{
     pointer-events:none;
 }
 
+.loader{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    border:2px solid rgba(255,255,255,.08);
+    border-top:2px solid rgba(255,255,255,.9);
+    animation:spin 1.2s linear infinite;
+}
+
 .connect{
-    font-size:72px;
-    font-weight:300;
+    margin-top:30px;
     color:white;
+    font-size:64px;
+    font-weight:300;
+    letter-spacing:1px;
 
     text-shadow:
-        0 0 20px rgba(255,255,255,.15);
-
-    animation:float 2s ease-in-out infinite;
+        0 0 15px rgba(255,255,255,.12),
+        0 0 30px rgba(255,255,255,.08);
 }
 
 .brand{
     margin-top:14px;
     color:#666;
-    font-size:16px;
+    font-size:15px;
     letter-spacing:3px;
     text-transform:uppercase;
 }
 
-.dots::after{
-    content:"";
-    animation:dots 1.5s infinite;
+.progress{
+    margin-top:30px;
+    width:280px;
+    height:3px;
+    background:rgba(255,255,255,.08);
+    border-radius:50px;
+    overflow:hidden;
 }
 
-/* Aviso de conectado */
+.progress::after{
+    content:"";
+    display:block;
+    width:40%;
+    height:100%;
+    background:white;
+    border-radius:50px;
+    animation:move 1.8s infinite;
+}
+
+/* FLASH VERDE */
+
+#greenFlash{
+    position:fixed;
+    inset:0;
+
+    background:
+        radial-gradient(circle,
+        rgba(0,255,100,.35) 0%,
+        rgba(0,255,100,.15) 40%,
+        rgba(0,0,0,0) 100%);
+
+    opacity:0;
+
+    pointer-events:none;
+
+    z-index:99998;
+
+    transition:1s;
+}
+
+#greenFlash.show{
+    opacity:1;
+}
+
+/* CONECTADO CORRECTAMENTE */
 
 #success{
     position:fixed;
+
     top:50%;
     left:50%;
 
-    transform:translate(-50%,-50%);
+    transform:translate(-50%,-50%) scale(.75);
 
-    background:rgba(15,15,15,.95);
-    color:white;
+    background:rgba(10,20,10,.96);
 
-    padding:18px 28px;
+    border:1px solid rgba(0,255,100,.25);
 
-    border-radius:14px;
+    padding:35px 55px;
 
-    backdrop-filter:blur(12px);
+    border-radius:22px;
+
+    color:#66ff99;
+
+    font-size:48px;
+
+    font-weight:700;
+
+    text-align:center;
 
     box-shadow:
-        0 0 40px rgba(255,255,255,.08);
+        0 0 40px rgba(0,255,100,.20),
+        0 0 100px rgba(0,255,100,.08);
 
     opacity:0;
 
     z-index:100000;
 
-    transition:.5s;
-
-    font-size:18px;
+    transition:
+        opacity .5s ease,
+        transform .5s ease;
 }
 
 #success.show{
     opacity:1;
+    transform:translate(-50%,-50%) scale(1);
 }
 
-/* Indicador permanente */
+.success-icon{
+    font-size:80px;
+    display:block;
+    margin-bottom:10px;
+}
+
+/* ESTADO ARRIBA IZQUIERDA */
 
 #status{
     position:fixed;
@@ -106,19 +171,19 @@ iframe{
     top:12px;
     left:12px;
 
-    background:rgba(0,0,0,.25);
+    background:rgba(0,0,0,.28);
 
-    color:rgba(255,255,255,.75);
+    backdrop-filter:blur(10px);
+
+    color:rgba(255,255,255,.82);
 
     padding:8px 12px;
 
     border-radius:10px;
 
-    backdrop-filter:blur(8px);
-
     opacity:0;
 
-    transition:.5s;
+    transition:.6s;
 
     z-index:9999;
 }
@@ -130,40 +195,51 @@ iframe{
 #status small{
     display:block;
     margin-top:2px;
-    color:rgba(255,255,255,.4);
+    color:rgba(255,255,255,.45);
     font-size:11px;
 }
 
-/* Animaciones */
+/* ANIMACIONES */
 
-@keyframes dots{
-    0%{content:"";}
-    33%{content:".";}
-    66%{content:"..";}
-    100%{content:"...";}
+@keyframes spin{
+    from{transform:rotate(0deg);}
+    to{transform:rotate(360deg);}
 }
 
-@keyframes float{
-    0%{transform:translateY(0);}
-    50%{transform:translateY(-4px);}
-    100%{transform:translateY(0);}
+@keyframes move{
+    0%{
+        transform:translateX(-100%);
+    }
+    100%{
+        transform:translateX(350%);
+    }
 }
 </style>
 </head>
 <body>
 
 <div id="loading">
+
+    <div class="loader"></div>
+
     <div class="connect">
-        Conectando<span class="dots"></span>
+        Conectando...
     </div>
 
     <div class="brand">
         Shadow Web
     </div>
+
+    <div class="progress"></div>
+
 </div>
 
+<div id="greenFlash"></div>
+
 <div id="success">
-    ✓ Conectado correctamente
+    <span class="success-icon">✓</span>
+    CONECTADO<br>
+    CORRECTAMENTE
 </div>
 
 <div id="status">
@@ -180,9 +256,10 @@ iframe{
 <script>
 
 const iframe = document.getElementById("vdo");
-const status = document.getElementById("status");
 const loading = document.getElementById("loading");
 const success = document.getElementById("success");
+const status = document.getElementById("status");
+const flash = document.getElementById("greenFlash");
 
 window.addEventListener("message",(e)=>{
 
@@ -201,25 +278,30 @@ window.addEventListener("message",(e)=>{
 
 setTimeout(()=>{
 
-    iframe.contentWindow.postMessage({
-        setBufferDelay:4500,
-        UUID:"*"
-    },"*");
+    try{
+        iframe.contentWindow.postMessage({
+            setBufferDelay:4500,
+            UUID:"*"
+        },"*");
+    }catch(e){}
 
     loading.classList.add("hide");
 
     setTimeout(()=>{
 
+        flash.classList.add("show");
         success.classList.add("show");
 
         setTimeout(()=>{
 
+            flash.classList.remove("show");
             success.classList.remove("show");
+
             status.classList.add("show");
 
         },2500);
 
-    },600);
+    },500);
 
 },4500);
 
