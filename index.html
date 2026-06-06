@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jcorko Stream</title>
+<title>Jcorko Streaming</title>
 
 <style>
 html,body{
@@ -45,7 +45,6 @@ iframe{
     font-size:64px;
     font-weight:300;
     letter-spacing:1px;
-
     text-shadow:
         0 0 15px rgba(255,255,255,.12),
         0 0 30px rgba(255,255,255,.08);
@@ -53,14 +52,34 @@ iframe{
 
 .brand{
     margin-top:14px;
-    color:#b16cff;
-    font-size:15px;
-    letter-spacing:3px;
+    font-size:16px;
+    letter-spacing:4px;
     text-transform:uppercase;
+    animation:purpleGlow 2s ease-in-out infinite;
+    color:#b16cff;
+}
 
-    text-shadow:
-        0 0 10px rgba(177,108,255,.5),
-        0 0 25px rgba(177,108,255,.25);
+@keyframes purpleGlow{
+    0%{
+        color:#a45cff;
+        text-shadow:
+            0 0 8px rgba(164,92,255,.4),
+            0 0 20px rgba(164,92,255,.2);
+    }
+
+    50%{
+        color:#d0a8ff;
+        text-shadow:
+            0 0 16px rgba(208,168,255,.8),
+            0 0 40px rgba(208,168,255,.4);
+    }
+
+    100%{
+        color:#a45cff;
+        text-shadow:
+            0 0 8px rgba(164,92,255,.4),
+            0 0 20px rgba(164,92,255,.2);
+    }
 }
 
 .progress{
@@ -94,8 +113,8 @@ iframe{
 
     background:
         radial-gradient(circle,
-        rgba(0,255,100,.40) 0%,
-        rgba(0,255,100,.18) 40%,
+        rgba(0,255,100,.45) 0%,
+        rgba(0,255,100,.20) 40%,
         rgba(0,0,0,0) 100%);
 
     opacity:0;
@@ -160,12 +179,10 @@ iframe{
 
 #status{
     position:fixed;
-
     top:12px;
     left:12px;
 
     background:rgba(0,0,0,.28);
-
     backdrop-filter:blur(10px);
 
     color:rgba(255,255,255,.82);
@@ -175,7 +192,6 @@ iframe{
     border-radius:10px;
 
     opacity:0;
-
     transition:.6s;
 
     z-index:9999;
@@ -218,7 +234,7 @@ iframe{
     </div>
 
     <div class="brand">
-        Jcorko Stream
+        JCORKO STREAMING
     </div>
 
     <div class="progress"></div>
@@ -234,8 +250,8 @@ iframe{
 </div>
 
 <div id="status">
-    <div id="statusText">● Conectado</div>
-    <small>Jcorko Stream</small>
+    <div id="statusText">● Conectado correctamente</div>
+    <small>Jcorko Streaming</small>
 </div>
 
 <iframe
