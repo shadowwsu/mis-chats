@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jcorko Streaming</title>
+<title>VDO Ninja Delay 5s</title>
 
 <style>
 html,body{
@@ -12,247 +12,27 @@ html,body{
     height:100%;
     overflow:hidden;
     background:#000;
-    font-family:'Segoe UI',Arial,sans-serif;
 }
-
 iframe{
     width:100%;
     height:100%;
     border:0;
 }
-
-/* PANTALLA DE CARGA */
-
-#loading{
-    position:fixed;
-    inset:0;
-    background:#000;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    z-index:99999;
-    transition:opacity .8s ease;
-}
-
-#loading.hide{
-    opacity:0;
-    pointer-events:none;
-}
-
-.connect{
-    color:white;
-    font-size:64px;
-    font-weight:300;
-    letter-spacing:1px;
-    text-shadow:
-        0 0 15px rgba(255,255,255,.12),
-        0 0 30px rgba(255,255,255,.08);
-}
-
-.brand{
-    margin-top:14px;
-    font-size:16px;
-    letter-spacing:4px;
-    text-transform:uppercase;
-    animation:purpleGlow 2s ease-in-out infinite;
-    color:#b16cff;
-}
-
-@keyframes purpleGlow{
-    0%{
-        color:#a45cff;
-        text-shadow:
-            0 0 8px rgba(164,92,255,.4),
-            0 0 20px rgba(164,92,255,.2);
-    }
-
-    50%{
-        color:#d0a8ff;
-        text-shadow:
-            0 0 16px rgba(208,168,255,.8),
-            0 0 40px rgba(208,168,255,.4);
-    }
-
-    100%{
-        color:#a45cff;
-        text-shadow:
-            0 0 8px rgba(164,92,255,.4),
-            0 0 20px rgba(164,92,255,.2);
-    }
-}
-
-.progress{
-    margin-top:35px;
-    width:320px;
-    height:3px;
-    background:rgba(255,255,255,.08);
-    border-radius:50px;
-    overflow:hidden;
-}
-
-.progress::after{
-    content:"";
-    display:block;
-    width:40%;
-    height:100%;
-    background:#b16cff;
-    border-radius:50px;
-    animation:move 1.8s infinite;
-
-    box-shadow:
-        0 0 12px #b16cff,
-        0 0 24px #b16cff;
-}
-
-/* FLASH VERDE */
-
-#greenFlash{
-    position:fixed;
-    inset:0;
-
-    background:
-        radial-gradient(circle,
-        rgba(0,255,100,.45) 0%,
-        rgba(0,255,100,.20) 40%,
-        rgba(0,0,0,0) 100%);
-
-    opacity:0;
-    pointer-events:none;
-    z-index:99998;
-    transition:1s;
-}
-
-#greenFlash.show{
-    opacity:1;
-}
-
-/* CONECTADO CORRECTAMENTE */
-
-#success{
-    position:fixed;
-    top:50%;
-    left:50%;
-
-    transform:translate(-50%,-50%) scale(.75);
-
-    background:rgba(10,20,10,.96);
-
-    border:1px solid rgba(0,255,100,.25);
-
-    padding:40px 60px;
-
-    border-radius:22px;
-
-    color:#66ff99;
-
-    font-size:52px;
-    font-weight:700;
-
-    text-align:center;
-
-    box-shadow:
-        0 0 40px rgba(0,255,100,.20),
-        0 0 120px rgba(0,255,100,.10);
-
-    opacity:0;
-
-    z-index:100000;
-
-    transition:
-        opacity .5s ease,
-        transform .5s ease;
-}
-
-#success.show{
-    opacity:1;
-    transform:translate(-50%,-50%) scale(1);
-}
-
-.success-icon{
-    font-size:90px;
-    display:block;
-    margin-bottom:10px;
-}
-
-/* ESTADO ARRIBA IZQUIERDA */
-
 #status{
     position:fixed;
-    top:12px;
-    left:12px;
-
-    background:rgba(0,0,0,.28);
-    backdrop-filter:blur(10px);
-
-    color:rgba(255,255,255,.82);
-
+    top:10px;
+    left:10px;
+    background:rgba(0,0,0,.7);
+    color:white;
     padding:8px 12px;
-
-    border-radius:10px;
-
-    opacity:0;
-    transition:.6s;
-
+    font-family:Arial;
     z-index:9999;
-}
-
-#status.show{
-    opacity:1;
-}
-
-#status small{
-    display:block;
-    margin-top:2px;
-    color:rgba(255,255,255,.45);
-    font-size:11px;
-}
-
-#statusText{
-    color:#66ff99;
-    font-weight:600;
-}
-
-/* ANIMACIONES */
-
-@keyframes move{
-    0%{
-        transform:translateX(-100%);
-    }
-    100%{
-        transform:translateX(350%);
-    }
 }
 </style>
 </head>
 <body>
 
-<div id="loading">
-
-    <div class="connect">
-        ReConectando...
-    </div>
-
-    <div class="brand">
-        JCORKO STREAMING
-    </div>
-
-    <div class="progress"></div>
-
-</div>
-
-<div id="greenFlash"></div>
-
-<div id="success">
-    <span class="success-icon">✓</span>
-    CONECTADO<br>
-    CORRECTAMENTE
-</div>
-
-<div id="status">
-    <div id="statusText">● Conectado correctamente</div>
-    <small>Jcorko Streaming</small>
-</div>
+<div id="status">Conectando...</div>
 
 <iframe
     id="vdo"
@@ -263,54 +43,38 @@ iframe{
 <script>
 
 const iframe = document.getElementById("vdo");
-const loading = document.getElementById("loading");
-const success = document.getElementById("success");
 const status = document.getElementById("status");
-const flash = document.getElementById("greenFlash");
 
 window.addEventListener("message",(e)=>{
 
     if(e.source !== iframe.contentWindow) return;
 
+    console.log("VDO:",e.data);
+
     if(e.data && e.data.action){
 
+        status.innerText = "Conectado";
+
         iframe.contentWindow.postMessage({
-            setBufferDelay:4500,
-            UUID:"*"
+            setBufferDelay: 5000,
+            UUID: "*"
         },"*");
 
+        console.log("Delay 5000ms enviado");
     }
 
 });
 
 setTimeout(()=>{
 
-    try{
-        iframe.contentWindow.postMessage({
-            setBufferDelay:4500,
-            UUID:"*"
-        },"*");
-    }catch(e){}
+    iframe.contentWindow.postMessage({
+        setBufferDelay: 5000,
+        UUID: "*"
+    },"*");
 
-    loading.classList.add("hide");
+    status.innerText = "Delay aplicado";
 
-    setTimeout(()=>{
-
-        flash.classList.add("show");
-        success.classList.add("show");
-
-        setTimeout(()=>{
-
-            flash.classList.remove("show");
-            success.classList.remove("show");
-
-            status.classList.add("show");
-
-        },2500);
-
-    },500);
-
-},4500);
+},10000);
 
 </script>
 
