@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VDO Ninja Delay 5s</title>
+<title>VDO Ninja Delay 7s</title>
 
 <style>
 html,body{
@@ -56,11 +56,11 @@ window.addEventListener("message",(e)=>{
         status.innerText = "Conectado";
 
         iframe.contentWindow.postMessage({
-            setBufferDelay: 5000,
+            setBufferDelay: 7000,
             UUID: "*"
         },"*");
 
-        console.log("Delay 5000ms enviado");
+        console.log("Delay 7000ms enviado");
     }
 
 });
@@ -68,13 +68,13 @@ window.addEventListener("message",(e)=>{
 setTimeout(()=>{
 
     iframe.contentWindow.postMessage({
-        setBufferDelay: 5000,
+        setBufferDelay: 7000,
         UUID: "*"
     },"*");
 
-    status.innerText = "Delay aplicado";
+    status.innerText = "Delay 7s aplicado";
 
-},10000);
+},2000);
 
 </script>
 
